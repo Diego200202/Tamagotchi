@@ -17,7 +17,7 @@ import javax.swing.JButton;
 import javax.swing.SwingConstants;
 
 public class PantallaInicio extends JFrame {
-//unai casate conmigo
+
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JPanel panelNorte;
