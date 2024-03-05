@@ -263,6 +263,7 @@ public class PantallaInicio extends JFrame {
 		return lblScore;
 	}
 
+	//Comentario
 	private JPanel getPanelAbajoDer() {
 		if (panelAbajoDer == null) {
 			panelAbajoDer = new JPanel();
