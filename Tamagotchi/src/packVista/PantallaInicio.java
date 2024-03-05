@@ -119,6 +119,7 @@ public class PantallaInicio extends JFrame {
 			panelMedioArriba.add(getBtnExit());
 		}
 		return panelMedioArriba;
+		//return de nada
 	}
 
 	private JPanel getPanelMedioAbajo() {
