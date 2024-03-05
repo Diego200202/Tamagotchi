@@ -47,8 +47,7 @@ public class PantallaInicio extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	//ainhize te quiero
-	//jhjghgh
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -120,7 +119,6 @@ public class PantallaInicio extends JFrame {
 			panelMedioArriba.add(getBtnExit());
 		}
 		return panelMedioArriba;
-		//return de nada
 	}
 
 	private JPanel getPanelMedioAbajo() {
@@ -160,7 +158,7 @@ public class PantallaInicio extends JFrame {
 			btnPlay = new JButton("play");
 			btnPlay.setBackground(Color.RED);
 			btnPlay.setForeground(Color.BLACK);
-			
+
 		}
 		return btnPlay;
 	}
@@ -170,7 +168,7 @@ public class PantallaInicio extends JFrame {
 			btnExit = new JButton("exit");
 			btnExit.setBackground(Color.RED);
 			btnExit.setForeground(Color.BLACK);
-			
+
 		}
 		return btnExit;
 	}
@@ -266,7 +264,7 @@ public class PantallaInicio extends JFrame {
 		return lblScore;
 	}
 
-	//Comentario
+	// Comentario
 	private JPanel getPanelAbajoDer() {
 		if (panelAbajoDer == null) {
 			panelAbajoDer = new JPanel();
