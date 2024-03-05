@@ -65,7 +65,7 @@ public class PantallaInicio extends JFrame {
 	 */
 	public PantallaInicio() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 650, 450);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -75,7 +75,7 @@ public class PantallaInicio extends JFrame {
 		contentPane.setBackground(Color.BLACK);
 		contentPane.add(getPanelMedio(), BorderLayout.CENTER);
 		contentPane.add(getPanelAbajo(), BorderLayout.SOUTH);
-		
+
 		this.crearRecords();
 	}
 
@@ -87,6 +87,7 @@ public class PantallaInicio extends JFrame {
 		}
 		return panelNorte;
 	}
+
 	private JLabel getLblImagen() {
 		if (lblImagen == null) {
 			ImageIcon img = new ImageIcon(this.getClass().getResource("/imagenes/logo.png"));
@@ -94,6 +95,7 @@ public class PantallaInicio extends JFrame {
 		}
 		return lblImagen;
 	}
+
 	private JPanel getPanelMedio() {
 		if (panelMedio == null) {
 			panelMedio = new JPanel();
@@ -104,6 +106,7 @@ public class PantallaInicio extends JFrame {
 		}
 		return panelMedio;
 	}
+
 	private JPanel getPanelMedioArriba() {
 		if (panelMedioArriba == null) {
 			panelMedioArriba = new JPanel();
@@ -116,6 +119,7 @@ public class PantallaInicio extends JFrame {
 		}
 		return panelMedioArriba;
 	}
+
 	private JPanel getPanelMedioAbajo() {
 		if (panelMedioAbajo == null) {
 			panelMedioAbajo = new JPanel();
@@ -126,6 +130,7 @@ public class PantallaInicio extends JFrame {
 		}
 		return panelMedioAbajo;
 	}
+
 	private JLabel getLblNombre() {
 		if (lblNombre == null) {
 			lblNombre = new JLabel("Your Name:");
@@ -135,6 +140,7 @@ public class PantallaInicio extends JFrame {
 		}
 		return lblNombre;
 	}
+
 	private JTextField getTextFieldNombre() {
 		if (textFieldNombre == null) {
 			textFieldNombre = new JTextField();
@@ -145,22 +151,27 @@ public class PantallaInicio extends JFrame {
 		}
 		return textFieldNombre;
 	}
+
 	private JButton getBtnPlay() {
 		if (btnPlay == null) {
 			btnPlay = new JButton("play");
 			btnPlay.setBackground(Color.RED);
 			btnPlay.setForeground(Color.BLACK);
+			
 		}
 		return btnPlay;
 	}
+
 	private JButton getBtnExit() {
 		if (btnExit == null) {
 			btnExit = new JButton("exit");
 			btnExit.setBackground(Color.RED);
 			btnExit.setForeground(Color.BLACK);
+			
 		}
 		return btnExit;
 	}
+
 	private JLabel getLblLeaderBoard() {
 		if (lblLeaderBoard == null) {
 			lblLeaderBoard = new JLabel("LeaderBoard");
@@ -170,6 +181,7 @@ public class PantallaInicio extends JFrame {
 		}
 		return lblLeaderBoard;
 	}
+
 	private JLabel getLblVacio() {
 		if (lblVacio == null) {
 			lblVacio = new JLabel("");
@@ -177,6 +189,7 @@ public class PantallaInicio extends JFrame {
 		}
 		return lblVacio;
 	}
+
 	private JPanel getPanelAbajo() {
 		if (panelAbajo == null) {
 			panelAbajo = new JPanel();
@@ -187,6 +200,7 @@ public class PantallaInicio extends JFrame {
 		}
 		return panelAbajo;
 	}
+
 	private JPanel getPanelAbajoIzda() {
 		if (panelAbajoIzda == null) {
 			panelAbajoIzda = new JPanel();
@@ -197,6 +211,7 @@ public class PantallaInicio extends JFrame {
 		}
 		return panelAbajoIzda;
 	}
+
 	private JPanel getPanelTitulos() {
 		if (panelTitulos == null) {
 			panelTitulos = new JPanel();
@@ -208,6 +223,7 @@ public class PantallaInicio extends JFrame {
 		}
 		return panelTitulos;
 	}
+
 	private JPanel getPanelRecords() {
 		if (panelRecords == null) {
 			panelRecords = new JPanel();
@@ -216,6 +232,7 @@ public class PantallaInicio extends JFrame {
 		}
 		return panelRecords;
 	}
+
 	private JLabel getLblRank() {
 		if (lblRank == null) {
 			lblRank = new JLabel("Rank");
@@ -225,6 +242,7 @@ public class PantallaInicio extends JFrame {
 		}
 		return lblRank;
 	}
+
 	private JLabel getLblName() {
 		if (lblName == null) {
 			lblName = new JLabel("Name");
@@ -234,6 +252,7 @@ public class PantallaInicio extends JFrame {
 		}
 		return lblName;
 	}
+
 	private JLabel getLblScore() {
 		if (lblScore == null) {
 			lblScore = new JLabel("Score");
@@ -243,6 +262,7 @@ public class PantallaInicio extends JFrame {
 		}
 		return lblScore;
 	}
+
 	private JPanel getPanelAbajoDer() {
 		if (panelAbajoDer == null) {
 			panelAbajoDer = new JPanel();
@@ -251,6 +271,7 @@ public class PantallaInicio extends JFrame {
 		}
 		return panelAbajoDer;
 	}
+
 	private JLabel getLblImagenAbajo() {
 		if (lblImagenAbajo == null) {
 			lblImagenAbajo = new JLabel("");
@@ -268,27 +289,27 @@ public class PantallaInicio extends JFrame {
 		}
 		return panel;
 	}
-	
+
 	private JPanel crearPanel(Color pColor, int num) {
 		JPanel pnl = new JPanel();
 		pnl.setBackground(Color.BLACK);
 		pnl.setLayout(new GridLayout(1, 3, 0, 0));
 		JLabel lbl1 = new JLabel();
-		switch(num) {
-		case 1:
-			lbl1.setText("1st");
-			break;
-		case 2:
-			lbl1.setText("2nd");
-			break;
-		case 3:
-			lbl1.setText("3rd");
-			break;
-		case 4:
-			lbl1.setText("4th");
-			break;
-		case 5: 
-			lbl1.setText("5th");
+		switch (num) {
+			case 1:
+				lbl1.setText("1st");
+				break;
+			case 2:
+				lbl1.setText("2nd");
+				break;
+			case 3:
+				lbl1.setText("3rd");
+				break;
+			case 4:
+				lbl1.setText("4th");
+				break;
+			case 5:
+				lbl1.setText("5th");
 		}
 		lbl1.setForeground(pColor);
 		JLabel lbl2 = new JLabel();
@@ -301,7 +322,7 @@ public class PantallaInicio extends JFrame {
 		pnl.add(lbl3);
 		return pnl;
 	}
-	
+
 	private void crearRecords() {
 		this.getPanelRecords().add(this.crearPanel(new Color(48, 228, 99), 1));
 		this.getPanelRecords().add(this.crearPanel(Color.BLUE, 2));
@@ -309,6 +330,7 @@ public class PantallaInicio extends JFrame {
 		this.getPanelRecords().add(this.crearPanel(new Color(204, 48, 245), 4));
 		this.getPanelRecords().add(this.crearPanel(Color.MAGENTA, 5));
 	}
+
 	private JLabel getLblNewLabel_1() {
 		if (lblNewLabel_1 == null) {
 			lblNewLabel_1 = new JLabel("");
