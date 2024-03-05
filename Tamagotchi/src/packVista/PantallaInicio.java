@@ -48,6 +48,7 @@ public class PantallaInicio extends JFrame {
 	 * Launch the application.
 	 */
 	//ainhize te quiero
+	//jhjghgh
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
