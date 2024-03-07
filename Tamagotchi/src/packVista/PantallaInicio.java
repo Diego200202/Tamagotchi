@@ -12,6 +12,11 @@ import java.awt.Color;
 
 import javax.swing.JLabel;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
@@ -20,34 +25,33 @@ public class PantallaInicio extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JPanel panelNorte;
+	private JPanel panelArriba;
 	private JLabel lblImagen;
 	private JPanel panelMedio;
-	private JPanel panelMedioArriba;
-	private JPanel panelMedioAbajo;
 	private JLabel lblNombre;
 	private JTextField textFieldNombre;
 	private JButton btnPlay;
 	private JButton btnExit;
-	private JLabel lblLeaderBoard;
-	private JLabel lblVacio;
 	private JPanel panelAbajo;
-	private JPanel panelAbajoIzda;
+	private JPanel panelLeaderBoard;
+	private JLabel lblLeaderBoard;
+	private JPanel panelFotos;
 	private JPanel panelTitulos;
-	private JPanel panelRecords;
 	private JLabel lblRank;
 	private JLabel lblName;
 	private JLabel lblScore;
-	private JPanel panelAbajoDer;
-	private JLabel lblImagenAbajo;
-	private JPanel panel;
-	private JLabel lblNewLabel;
+	private JPanel panelRecords;
+	private JPanel panelImagenPequeña;
+	private JLabel lblImagenGrande;
 	private JLabel lblNewLabel_1;
+	private JLabel lblNewLabel_2;
+	private JLabel lblNewLabel_3;
+	private JLabel lblImagenPequeña;
+	private ControladorBtnPlay controladorPlay;
 
 	/**
 	 * Launch the application.
 	 */
-
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -65,33 +69,34 @@ public class PantallaInicio extends JFrame {
 	 * Create the frame.
 	 */
 	public PantallaInicio() {
+		setTitle("Tamagotchi");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 650, 450);
+		setBounds(100, 100, 600, 460);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
-		contentPane.add(getPanelNorte(), BorderLayout.NORTH);
+		contentPane.add(getPanelArriba(), BorderLayout.NORTH);
 		contentPane.setBackground(Color.BLACK);
 		contentPane.add(getPanelMedio(), BorderLayout.CENTER);
 		contentPane.add(getPanelAbajo(), BorderLayout.SOUTH);
 
-		this.crearRecords();
+		this.anadirLabeles();
 	}
 
-	private JPanel getPanelNorte() {
-		if (panelNorte == null) {
-			panelNorte = new JPanel();
-			panelNorte.setBackground(Color.BLACK);
-			panelNorte.add(getLblImagen());
+	private JPanel getPanelArriba() {
+		if (panelArriba == null) {
+			panelArriba = new JPanel();
+			panelArriba.setBackground(Color.BLACK);
+			panelArriba.add(getLblImagen());
 		}
-		return panelNorte;
+		return panelArriba;
 	}
 
 	private JLabel getLblImagen() {
 		if (lblImagen == null) {
-			ImageIcon img = new ImageIcon(this.getClass().getResource("/imagenes/logo.png"));
+			ImageIcon img = new ImageIcon(this.getClass().getResource("/imagenes/MainTitle.png"));
 			lblImagen = new JLabel(img);
 		}
 		return lblImagen;
@@ -101,35 +106,13 @@ public class PantallaInicio extends JFrame {
 		if (panelMedio == null) {
 			panelMedio = new JPanel();
 			panelMedio.setBackground(Color.BLACK);
-			panelMedio.setLayout(new GridLayout(2, 1, 0, 0));
-			panelMedio.add(getPanelMedioArriba());
-			panelMedio.add(getPanelMedioAbajo());
+			panelMedio.setLayout(new GridLayout(1, 4, 0, 0));
+			panelMedio.add(getLblNombre());
+			panelMedio.add(getTextFieldNombre());
+			panelMedio.add(getBtnPlay());
+			panelMedio.add(getBtnExit());
 		}
 		return panelMedio;
-	}
-
-	private JPanel getPanelMedioArriba() {
-		if (panelMedioArriba == null) {
-			panelMedioArriba = new JPanel();
-			panelMedioArriba.setBackground(Color.BLACK);
-			panelMedioArriba.setLayout(new GridLayout(0, 4, 6, 0));
-			panelMedioArriba.add(getLblNombre());
-			panelMedioArriba.add(getTextFieldNombre());
-			panelMedioArriba.add(getBtnPlay());
-			panelMedioArriba.add(getBtnExit());
-		}
-		return panelMedioArriba;
-	}
-
-	private JPanel getPanelMedioAbajo() {
-		if (panelMedioAbajo == null) {
-			panelMedioAbajo = new JPanel();
-			panelMedioAbajo.setBackground(Color.BLACK);
-			panelMedioAbajo.setLayout(new GridLayout(0, 2, 0, 0));
-			panelMedioAbajo.add(getPanel());
-			panelMedioAbajo.add(getLblVacio());
-		}
-		return panelMedioAbajo;
 	}
 
 	private JLabel getLblNombre() {
@@ -158,7 +141,7 @@ public class PantallaInicio extends JFrame {
 			btnPlay = new JButton("play");
 			btnPlay.setBackground(Color.RED);
 			btnPlay.setForeground(Color.BLACK);
-
+			btnPlay.addActionListener(this.getControladorBtnPlay());
 		}
 		return btnPlay;
 	}
@@ -168,49 +151,52 @@ public class PantallaInicio extends JFrame {
 			btnExit = new JButton("exit");
 			btnExit.setBackground(Color.RED);
 			btnExit.setForeground(Color.BLACK);
-
 		}
 		return btnExit;
-	}
-
-	private JLabel getLblLeaderBoard() {
-		if (lblLeaderBoard == null) {
-			lblLeaderBoard = new JLabel("LeaderBoard");
-			lblLeaderBoard.setHorizontalAlignment(SwingConstants.CENTER);
-			lblLeaderBoard.setBackground(Color.BLACK);
-			lblLeaderBoard.setForeground(Color.WHITE);
-		}
-		return lblLeaderBoard;
-	}
-
-	private JLabel getLblVacio() {
-		if (lblVacio == null) {
-			lblVacio = new JLabel("");
-			lblVacio.setBackground(Color.BLACK);
-		}
-		return lblVacio;
 	}
 
 	private JPanel getPanelAbajo() {
 		if (panelAbajo == null) {
 			panelAbajo = new JPanel();
 			panelAbajo.setBackground(Color.BLACK);
-			panelAbajo.setLayout(new GridLayout(0, 2, 0, 0));
-			panelAbajo.add(getPanelAbajoIzda());
-			panelAbajo.add(getPanelAbajoDer());
+			panelAbajo.setLayout(new GridLayout(1, 2, 0, 0));
+			panelAbajo.add(getPanelLeaderBoard());
+			panelAbajo.add(getPanelFotos());
 		}
 		return panelAbajo;
 	}
 
-	private JPanel getPanelAbajoIzda() {
-		if (panelAbajoIzda == null) {
-			panelAbajoIzda = new JPanel();
-			panelAbajoIzda.setBackground(Color.BLACK);
-			panelAbajoIzda.setLayout(new GridLayout(2, 1, 0, 0));
-			panelAbajoIzda.add(getPanelTitulos());
-			panelAbajoIzda.add(getPanelRecords());
+	private JPanel getPanelLeaderBoard() {
+		if (panelLeaderBoard == null) {
+			panelLeaderBoard = new JPanel();
+			panelLeaderBoard.setBackground(Color.BLACK);
+			panelLeaderBoard.setLayout(new GridLayout(3, 1, 0, 0));
+			panelLeaderBoard.add(getLblLeaderBoard());
+			panelLeaderBoard.add(getPanelTitulos());
+			panelLeaderBoard.add(getPanelRecords());
 		}
-		return panelAbajoIzda;
+		return panelLeaderBoard;
+	}
+
+	private JLabel getLblLeaderBoard() {
+		if (lblLeaderBoard == null) {
+			lblLeaderBoard = new JLabel("LeaderBoard");
+			lblLeaderBoard.setVerticalAlignment(SwingConstants.BOTTOM);
+			lblLeaderBoard.setHorizontalAlignment(SwingConstants.CENTER);
+			lblLeaderBoard.setForeground(Color.WHITE);
+		}
+		return lblLeaderBoard;
+	}
+
+	private JPanel getPanelFotos() {
+		if (panelFotos == null) {
+			panelFotos = new JPanel();
+			panelFotos.setBackground(Color.BLACK);
+			panelFotos.setLayout(new GridLayout(0, 2, 0, 0));
+			panelFotos.add(getPanelImagenPequeña());
+			panelFotos.add(getLblImagenGrande());
+		}
+		return panelFotos;
 	}
 
 	private JPanel getPanelTitulos() {
@@ -225,21 +211,11 @@ public class PantallaInicio extends JFrame {
 		return panelTitulos;
 	}
 
-	private JPanel getPanelRecords() {
-		if (panelRecords == null) {
-			panelRecords = new JPanel();
-			panelRecords.setBackground(Color.BLACK);
-			panelRecords.setLayout(new GridLayout(5, 3, 0, 0));
-		}
-		return panelRecords;
-	}
-
 	private JLabel getLblRank() {
 		if (lblRank == null) {
 			lblRank = new JLabel("Rank");
-			lblRank.setForeground(Color.RED);
-			lblRank.setBackground(Color.BLACK);
 			lblRank.setHorizontalAlignment(SwingConstants.CENTER);
+			lblRank.setForeground(Color.RED);
 		}
 		return lblRank;
 	}
@@ -247,9 +223,8 @@ public class PantallaInicio extends JFrame {
 	private JLabel getLblName() {
 		if (lblName == null) {
 			lblName = new JLabel("Name");
-			lblName.setHorizontalAlignment(SwingConstants.CENTER);
-			lblName.setBackground(Color.BLACK);
 			lblName.setForeground(Color.RED);
+			lblName.setHorizontalAlignment(SwingConstants.CENTER);
 		}
 		return lblName;
 	}
@@ -258,79 +233,40 @@ public class PantallaInicio extends JFrame {
 		if (lblScore == null) {
 			lblScore = new JLabel("Score");
 			lblScore.setHorizontalAlignment(SwingConstants.CENTER);
-			lblScore.setBackground(Color.BLACK);
 			lblScore.setForeground(Color.RED);
 		}
 		return lblScore;
 	}
 
-	// Comentario
-	private JPanel getPanelAbajoDer() {
-		if (panelAbajoDer == null) {
-			panelAbajoDer = new JPanel();
-			panelAbajoDer.setBackground(Color.BLACK);
-			panelAbajoDer.add(getLblImagenAbajo());
+	private JPanel getPanelRecords() {
+		if (panelRecords == null) {
+			panelRecords = new JPanel();
+			panelRecords.setLayout(new GridLayout(5, 3, 5, 5));
+			panelRecords.setBackground(Color.BLACK);
 		}
-		return panelAbajoDer;
+		return panelRecords;
 	}
 
-	private JLabel getLblImagenAbajo() {
-		if (lblImagenAbajo == null) {
-			lblImagenAbajo = new JLabel("");
+	private JPanel getPanelImagenPequeña() {
+		if (panelImagenPequeña == null) {
+			panelImagenPequeña = new JPanel();
+			panelImagenPequeña.setBackground(Color.BLACK);
+			panelImagenPequeña.setLayout(new GridLayout(2, 2, 0, 0));
+			panelImagenPequeña.add(getLblNewLabel_1());
+			panelImagenPequeña.add(getLblNewLabel_2());
+			panelImagenPequeña.add(getLblNewLabel_3());
+			panelImagenPequeña.add(getLblImagenPequeña());
 		}
-		return lblImagenAbajo;
+		return panelImagenPequeña;
 	}
 
-	private JPanel getPanel() {
-		if (panel == null) {
-			panel = new JPanel();
-			panel.setBackground(Color.BLACK);
-			panel.setLayout(new GridLayout(2, 1, 0, 0));
-			panel.add(getLblNewLabel_1());
-			panel.add(getLblLeaderBoard());
+	private JLabel getLblImagenGrande() {
+		if (lblImagenGrande == null) {
+			lblImagenGrande = new JLabel("");
+			ImageIcon img = new ImageIcon(this.getClass().getResource("/imagenes/Marutchi1.png"));
+			lblImagenGrande.setIcon(img);
 		}
-		return panel;
-	}
-
-	private JPanel crearPanel(Color pColor, int num) {
-		JPanel pnl = new JPanel();
-		pnl.setBackground(Color.BLACK);
-		pnl.setLayout(new GridLayout(1, 3, 0, 0));
-		JLabel lbl1 = new JLabel();
-		switch (num) {
-			case 1:
-				lbl1.setText("1st");
-				break;
-			case 2:
-				lbl1.setText("2nd");
-				break;
-			case 3:
-				lbl1.setText("3rd");
-				break;
-			case 4:
-				lbl1.setText("4th");
-				break;
-			case 5:
-				lbl1.setText("5th");
-		}
-		lbl1.setForeground(pColor);
-		JLabel lbl2 = new JLabel();
-		JLabel lbl3 = new JLabel();
-		lbl1.setHorizontalAlignment(SwingConstants.CENTER);
-		lbl2.setHorizontalAlignment(SwingConstants.CENTER);
-		lbl3.setHorizontalAlignment(SwingConstants.CENTER);
-		pnl.add(lbl1);
-		pnl.add(lbl2);
-		pnl.add(lbl3);
-		return pnl;
-	}
-
-	private void crearRecords() {
-		this.getPanelRecords().add(this.crearPanel(new Color(48, 228, 99), 1));
-		this.getPanelRecords().add(this.crearPanel(Color.BLUE, 2));
-		this.getPanelRecords().add(this.crearPanel(new Color(255, 112, 230), 3));
-		this.getPanelRecords().add(this.crearPanel(new Color(204, 48, 245), 4));
-		this.getPanelRecords().add(this.crearPanel(Color.MAGENTA, 5));
+		return lblImagenGrande;
 	}
 
 	private JLabel getLblNewLabel_1() {
@@ -338,5 +274,79 @@ public class PantallaInicio extends JFrame {
 			lblNewLabel_1 = new JLabel("");
 		}
 		return lblNewLabel_1;
+	}
+
+	private JLabel getLblNewLabel_2() {
+		if (lblNewLabel_2 == null) {
+			lblNewLabel_2 = new JLabel("");
+		}
+		return lblNewLabel_2;
+	}
+
+	private JLabel getLblNewLabel_3() {
+		if (lblNewLabel_3 == null) {
+			lblNewLabel_3 = new JLabel("");
+		}
+		return lblNewLabel_3;
+	}
+
+	private JLabel getLblImagenPequeña() {
+		if (lblImagenPequeña == null) {
+			lblImagenPequeña = new JLabel("");
+			ImageIcon img = new ImageIcon(this.getClass().getResource("/imagenes/gudetama1.gif"));
+			lblImagenPequeña.setIcon(img);
+		}
+		return lblImagenPequeña;
+	}
+
+	private JLabel crearLbl() {
+		JLabel lbl = new JLabel("");
+		lbl.setBackground(Color.BLACK);
+		lbl.setHorizontalAlignment(SwingConstants.CENTER);
+		return lbl;
+	}
+
+	private void anadirLabeles() {
+		List<String> textos = new ArrayList<>();
+		textos.add("1st");
+		textos.add("2nd");
+		textos.add("3rd");
+		textos.add("4th");
+		textos.add("5th");
+
+		List<Color> colores = new ArrayList<>();
+		colores.add(Color.GREEN);
+		colores.add(Color.BLUE);
+		colores.add(Color.GRAY);
+		colores.add(Color.MAGENTA);
+		colores.add(Color.PINK);
+
+		for (int i = 0; i < 15; i++) {
+			JLabel lbl = crearLbl();
+			if (i % 3 == 0) { // Si es el primer JLabel de la fila
+				lbl.setText(textos.get(i / 3 % textos.size())); // Asigna el texto correspondiente a cada fila
+			}
+			lbl.setForeground(colores.get(i / 3 % colores.size()));
+			this.getPanelRecords().add(lbl);
+		}
+	}
+
+	private ControladorBtnPlay getControladorBtnPlay() {
+		if(controladorPlay == null) {
+			controladorPlay = new ControladorBtnPlay();
+		}
+		return controladorPlay;
+	}
+	
+	private class ControladorBtnPlay implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Auto-generated method stub
+			PantallaPrincipal pc = new PantallaPrincipal();
+			pc.setVisible(true);
+			setVisible(false);
+		}
+		
 	}
 }
