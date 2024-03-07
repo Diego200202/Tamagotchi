@@ -23,6 +23,7 @@ import javax.swing.SwingConstants;
 
 public class PantallaInicio extends JFrame {
 
+	private static PantallaInicio pantallaInicio = null;
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JPanel panelArriba;
@@ -50,25 +51,9 @@ public class PantallaInicio extends JFrame {
 	private ControladorBtnPlay controladorPlay;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					PantallaInicio frame = new PantallaInicio();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the frame.
 	 */
-	public PantallaInicio() {
+	private PantallaInicio() {
 		setTitle("Tamagotchi");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 600, 460);
@@ -83,6 +68,15 @@ public class PantallaInicio extends JFrame {
 		contentPane.add(getPanelAbajo(), BorderLayout.SOUTH);
 
 		this.anadirLabeles();
+
+		this.setVisible(true);
+	}
+
+	public static PantallaInicio getPantallaInicio() {
+		if(pantallaInicio == null) {
+			pantallaInicio = new PantallaInicio();
+		}
+		return pantallaInicio;
 	}
 
 	private JPanel getPanelArriba() {
