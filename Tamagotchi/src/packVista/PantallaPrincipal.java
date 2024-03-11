@@ -8,6 +8,8 @@ import javax.swing.border.EmptyBorder;
 
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JLabel;
 import java.awt.BorderLayout;
@@ -16,7 +18,7 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
-public class PantallaPrincipal extends JFrame {
+public class PantallaPrincipal extends JFrame implements Observer {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -139,6 +141,8 @@ public class PantallaPrincipal extends JFrame {
 	private JLabel getLblFoto() {
 		if (lblFoto == null) {
 			lblFoto = new JLabel("");
+			ImageIcon img = new ImageIcon(this.getClass().getResource("/imagenes/Egg1.png"));
+			lblFoto.setIcon(img);
 		}
 		return lblFoto;
 	}
@@ -354,5 +358,11 @@ public class PantallaPrincipal extends JFrame {
 			lblCu3.setIcon(img);
 		}
 		return lblCu3;
+	}
+
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'update'");
 	}
 }

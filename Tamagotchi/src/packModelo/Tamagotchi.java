@@ -1,9 +1,12 @@
 package packModelo;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import packModelo.evoluciones.Egg;
 import packModelo.evoluciones.Evoluciones;
 
-public class Tamagotchi {
+public class Tamagotchi extends Observable{
     private int vida;
     private int vidaMaxima;
     private int hambre;
