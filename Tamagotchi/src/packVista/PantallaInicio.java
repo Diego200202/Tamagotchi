@@ -7,6 +7,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import packModelo.Jugador;
+import packModelo.ListaJugadores;
+import packModelo.Partida;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 
@@ -14,17 +19,16 @@ import javax.swing.JLabel;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 
-public class PantallaInicio extends JFrame {
+public class PantallaInicio extends JFrame implements Observer {
 
 	private static PantallaInicio pantallaInicio = null;
-	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JPanel panelArriba;
 	private JLabel lblImagen;
@@ -48,15 +52,32 @@ public class PantallaInicio extends JFrame {
 	private JLabel lblNewLabel_2;
 	private JLabel lblNewLabel_3;
 	private JLabel lblImagenPequeña;
+	private JLabel lbl1st;
+	private JLabel lblName1;
+	private JLabel lblScore1;
+	private JLabel lbl2nd;
+	private JLabel lblName2;
+	private JLabel lblScore2;
+	private JLabel lbl3rd;
+	private JLabel lblName3;
+	private JLabel lblScore3;
+	private JLabel lbl4th;
+	private JLabel lblName4;
+	private JLabel lblScore4;
+	private JLabel lbl5th;
+	private JLabel lblName5;
+	private JLabel lblScore5;
 	private ControladorBtnPlay controladorPlay;
 
 	/**
 	 * Create the frame.
 	 */
 	private PantallaInicio() {
+		ListaJugadores.getListaJugadores().addObserver(this);
+
 		setTitle("Tamagotchi");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 600, 460);
+		setBounds(100, 100, 600, 540);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -66,14 +87,12 @@ public class PantallaInicio extends JFrame {
 		contentPane.setBackground(Color.BLACK);
 		contentPane.add(getPanelMedio(), BorderLayout.CENTER);
 		contentPane.add(getPanelAbajo(), BorderLayout.SOUTH);
-
-		this.anadirLabeles();
-
-		this.setVisible(true);
+		this.llenarRecords();
+		setVisible(true);
 	}
 
 	public static PantallaInicio getPantallaInicio() {
-		if(pantallaInicio == null) {
+		if (pantallaInicio == null) {
 			pantallaInicio = new PantallaInicio();
 		}
 		return pantallaInicio;
@@ -237,6 +256,21 @@ public class PantallaInicio extends JFrame {
 			panelRecords = new JPanel();
 			panelRecords.setLayout(new GridLayout(5, 3, 5, 5));
 			panelRecords.setBackground(Color.BLACK);
+			panelRecords.add(getLbl1st());
+			panelRecords.add(getLblName1());
+			panelRecords.add(getLblScore1());
+			panelRecords.add(getLbl2nd());
+			panelRecords.add(getLblName2());
+			panelRecords.add(getLblScore2());
+			panelRecords.add(getLbl3rd());
+			panelRecords.add(getLblName3());
+			panelRecords.add(getLblScore3());
+			panelRecords.add(getLbl4th());
+			panelRecords.add(getLblName4());
+			panelRecords.add(getLblScore4());
+			panelRecords.add(getLbl5th());
+			panelRecords.add(getLblName5());
+			panelRecords.add(getLblScore5());
 		}
 		return panelRecords;
 	}
@@ -293,54 +327,252 @@ public class PantallaInicio extends JFrame {
 		return lblImagenPequeña;
 	}
 
-	private JLabel crearLbl() {
-		JLabel lbl = new JLabel("");
-		lbl.setBackground(Color.BLACK);
-		lbl.setHorizontalAlignment(SwingConstants.CENTER);
-		return lbl;
+	private JLabel getLbl1st() {
+		if (lbl1st == null) {
+			lbl1st = new JLabel("1st");
+			lbl1st.setForeground(Color.GREEN);
+			lbl1st.setHorizontalAlignment(SwingConstants.CENTER);
+		}
+		return lbl1st;
 	}
 
-	private void anadirLabeles() {
-		List<String> textos = new ArrayList<>();
-		textos.add("1st");
-		textos.add("2nd");
-		textos.add("3rd");
-		textos.add("4th");
-		textos.add("5th");
+	private JLabel getLblName1() {
+		if (lblName1 == null) {
+			lblName1 = new JLabel("");
+			lblName1.setForeground(Color.GREEN);
+			lblName1.setHorizontalAlignment(SwingConstants.CENTER);
+		}
+		return lblName1;
+	}
 
-		List<Color> colores = new ArrayList<>();
-		colores.add(Color.GREEN);
-		colores.add(Color.BLUE);
-		colores.add(Color.GRAY);
-		colores.add(Color.MAGENTA);
-		colores.add(Color.PINK);
+	private JLabel getLblScore1() {
+		if (lblScore1 == null) {
+			lblScore1 = new JLabel("");
+			lblScore1.setForeground(Color.GREEN);
+			lblScore1.setHorizontalAlignment(SwingConstants.CENTER);
+		}
+		return lblScore1;
+	}
 
-		for (int i = 0; i < 15; i++) {
-			JLabel lbl = crearLbl();
-			if (i % 3 == 0) { // Si es el primer JLabel de la fila
-				lbl.setText(textos.get(i / 3 % textos.size())); // Asigna el texto correspondiente a cada fila
+	private JLabel getLbl2nd() {
+		if (lbl2nd == null) {
+			lbl2nd = new JLabel("2nd");
+			lbl2nd.setForeground(Color.BLUE);
+			lbl2nd.setHorizontalAlignment(SwingConstants.CENTER);
+		}
+		return lbl2nd;
+	}
+
+	private JLabel getLblName2() {
+		if (lblName2 == null) {
+			lblName2 = new JLabel("");
+			lblName2.setForeground(Color.BLUE);
+			lblName2.setHorizontalAlignment(SwingConstants.CENTER);
+		}
+		return lblName2;
+	}
+
+	private JLabel getLblScore2() {
+		if (lblScore2 == null) {
+			lblScore2 = new JLabel("");
+			lblScore2.setForeground(Color.BLUE);
+			lblScore2.setHorizontalAlignment(SwingConstants.CENTER);
+		}
+		return lblScore2;
+	}
+
+	private JLabel getLbl3rd() {
+		if (lbl3rd == null) {
+			lbl3rd = new JLabel("3rd");
+			lbl3rd.setForeground(Color.LIGHT_GRAY);
+			lbl3rd.setHorizontalAlignment(SwingConstants.CENTER);
+		}
+		return lbl3rd;
+	}
+
+	private JLabel getLblName3() {
+		if (lblName3 == null) {
+			lblName3 = new JLabel("");
+			lblName3.setForeground(Color.LIGHT_GRAY);
+			lblName3.setHorizontalAlignment(SwingConstants.CENTER);
+		}
+		return lblName3;
+	}
+
+	private JLabel getLblScore3() {
+		if (lblScore3 == null) {
+			lblScore3 = new JLabel("");
+			lblScore3.setForeground(Color.LIGHT_GRAY);
+			lblScore3.setHorizontalAlignment(SwingConstants.CENTER);
+		}
+		return lblScore3;
+	}
+
+	private JLabel getLbl4th() {
+		if (lbl4th == null) {
+			lbl4th = new JLabel("4th");
+			lbl4th.setForeground(Color.PINK);
+			lbl4th.setHorizontalAlignment(SwingConstants.CENTER);
+		}
+		return lbl4th;
+	}
+
+	private JLabel getLblName4() {
+		if (lblName4 == null) {
+			lblName4 = new JLabel("");
+			lblName4.setHorizontalAlignment(SwingConstants.CENTER);
+			lblName4.setForeground(Color.PINK);
+		}
+		return lblName4;
+	}
+
+	private JLabel getLblScore4() {
+		if (lblScore4 == null) {
+			lblScore4 = new JLabel("");
+			lblScore4.setHorizontalAlignment(SwingConstants.CENTER);
+			lblScore4.setForeground(Color.PINK);
+		}
+		return lblScore4;
+	}
+
+	private JLabel getLbl5th() {
+		if (lbl5th == null) {
+			lbl5th = new JLabel("5th");
+			lbl5th.setForeground(Color.MAGENTA);
+			lbl5th.setHorizontalAlignment(SwingConstants.CENTER);
+		}
+		return lbl5th;
+	}
+
+	private JLabel getLblName5() {
+		if (lblName5 == null) {
+			lblName5 = new JLabel("");
+			lblName5.setForeground(Color.MAGENTA);
+			lblName5.setHorizontalAlignment(SwingConstants.CENTER);
+		}
+		return lblName5;
+	}
+
+	private JLabel getLblScore5() {
+		if (lblScore5 == null) {
+			lblScore5 = new JLabel("");
+			lblScore5.setHorizontalAlignment(SwingConstants.CENTER);
+			lblScore5.setForeground(Color.MAGENTA);
+		}
+		return lblScore5;
+	}
+
+	private void llenarRecords() {
+		for (int i = 0; i < 5; i++) {
+			if (i < ListaJugadores.getListaJugadores().getLista().size()) {
+				Jugador jg = ListaJugadores.getListaJugadores().getLista().get(i);
+				if (jg != null) {
+					switch (i) {
+						case 0:
+							lblName1.setText(jg.getNombre());
+							lblScore1.setText(String.valueOf(jg.getScore()));
+							break;
+						case 1:
+							lblName2.setText(jg.getNombre());
+							lblScore2.setText(String.valueOf(jg.getScore()));
+							break;
+						case 2:
+							lblName3.setText(jg.getNombre());
+							lblScore3.setText(String.valueOf(jg.getScore()));
+							break;
+						case 3:
+							lblName4.setText(jg.getNombre());
+							lblScore4.setText(String.valueOf(jg.getScore()));
+							break;
+						case 4:
+							lblName5.setText(jg.getNombre());
+							lblScore5.setText(String.valueOf(jg.getScore()));
+							break;
+					}
+				}
 			}
-			lbl.setForeground(colores.get(i / 3 % colores.size()));
-			this.getPanelRecords().add(lbl);
 		}
 	}
 
 	private ControladorBtnPlay getControladorBtnPlay() {
-		if(controladorPlay == null) {
+		if (controladorPlay == null) {
 			controladorPlay = new ControladorBtnPlay();
 		}
 		return controladorPlay;
 	}
-	
-	private class ControladorBtnPlay implements ActionListener{
+
+	private class ControladorBtnPlay implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
+			Jugador jugador = new Jugador(textFieldNombre.getText(), 0);
+			Partida p = new Partida(jugador);
 			PantallaPrincipal pc = new PantallaPrincipal();
 			pc.setVisible(true);
 			setVisible(false);
 		}
-		
+
+	}
+
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		if (arg0 instanceof ListaJugadores) {// TODO Auto-generated method stub
+			if (arg1 instanceof Jugador[]) {
+				Jugador[] jugadores = (Jugador[]) arg1;
+
+				for (int i = 0; i < jugadores.length; i++) {
+					Jugador jugador = jugadores[i];
+					if (jugador != null) {
+						switch (i) {
+							case 0:
+								getLblName1().setText(jugador.getNombre());
+								getLblScore1().setText(String.valueOf(jugador.getScore()));
+								break;
+							case 1:
+								getLblName2().setText(jugador.getNombre());
+								getLblScore2().setText(String.valueOf(jugador.getScore()));
+								break;
+							case 2:
+								getLblName3().setText(jugador.getNombre());
+								getLblScore3().setText(String.valueOf(jugador.getScore()));
+								break;
+							case 3:
+								getLblName4().setText(jugador.getNombre());
+								getLblScore4().setText(String.valueOf(jugador.getScore()));
+								break;
+							case 4:
+								getLblName5().setText(jugador.getNombre());
+								getLblScore5().setText(String.valueOf(jugador.getScore()));
+								break;
+						}
+					} else {
+						// Si jugador es null, establecer los JLabels correspondientes como vacíos
+						switch (i) {
+							case 0:
+								getLblName1().setText("");
+								getLblScore1().setText("");
+								break;
+							case 1:
+								getLblName2().setText("");
+								getLblScore2().setText("");
+								break;
+							case 2:
+								getLblName3().setText("");
+								getLblScore3().setText("");
+								break;
+							case 3:
+								getLblName4().setText("");
+								getLblScore4().setText("");
+								break;
+							case 4:
+								getLblName5().setText("");
+								getLblScore5().setText("");
+								break;
+						}
+					}
+				}
+			}
+		}
 	}
 }
