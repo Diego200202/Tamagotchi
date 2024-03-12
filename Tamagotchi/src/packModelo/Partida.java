@@ -1,9 +1,10 @@
 package packModelo;
 
+import java.util.Observable;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Partida {
+public class Partida extends Observable{
     private int score;
     private Timer timer = null;
     private Jugador jugador;
@@ -15,6 +16,8 @@ public class Partida {
 			@Override
 			public void run() {
 				score += 1;
+                setChanged();
+                notifyObservers(new Object[] {score});
 			}		
 		};
 		timer = new Timer();

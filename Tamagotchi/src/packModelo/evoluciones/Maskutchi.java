@@ -1,8 +1,9 @@
 package packModelo.evoluciones;
 
-public class Maskutchi {
+public class Maskutchi implements Evoluciones{
     private int corazones = 3;
     private int comida = 14;
+    private String evolucion = "Maskutchi";
     
     public Maskutchi(){
 
@@ -14,5 +15,11 @@ public class Maskutchi {
 
     public int decrementoComida(){
         return this.comida;
+    }
+
+    @Override
+    public String evolucion() {
+        // TODO Auto-generated method stub
+        return this.evolucion;
     }
 }

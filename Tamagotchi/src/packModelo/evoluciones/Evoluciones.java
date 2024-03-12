@@ -5,4 +5,6 @@ public interface Evoluciones {
     int decrementoCorazones();
 
     int decrementoComida();
+
+    String evolucion();
 }

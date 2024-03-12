@@ -11,6 +11,7 @@ import javax.swing.border.EmptyBorder;
 import packModelo.Jugador;
 import packModelo.ListaJugadores;
 import packModelo.Partida;
+import packModelo.Tamagotchi;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -164,6 +165,7 @@ public class PantallaInicio extends JFrame implements Observer {
 			btnExit = new JButton("exit");
 			btnExit.setBackground(Color.RED);
 			btnExit.setForeground(Color.BLACK);
+			btnExit.addActionListener(this.getControladorBtnPlay());
 		}
 		return btnExit;
 	}
@@ -506,11 +508,19 @@ public class PantallaInicio extends JFrame implements Observer {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
-			Jugador jugador = new Jugador(textFieldNombre.getText(), 0);
-			Partida p = new Partida(jugador);
-			PantallaPrincipal pc = new PantallaPrincipal();
-			pc.setVisible(true);
-			setVisible(false);
+			if(arg0.getSource().equals(btnPlay)){
+				Jugador jugador = new Jugador(textFieldNombre.getText(), 0);
+				Partida p = new Partida(jugador);
+				PantallaPrincipal pc = new PantallaPrincipal(p);
+				Tamagotchi t = new Tamagotchi();
+				p.addObserver(pc);
+				t.addObserver(pc);
+				pc.setVisible(true);
+				setVisible(false);
+			}
+			if(arg0.getSource().equals(btnExit)){
+				dispose();
+			}
 		}
 
 	}

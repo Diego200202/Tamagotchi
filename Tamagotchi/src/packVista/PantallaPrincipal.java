@@ -6,8 +6,15 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import packModelo.Jugador;
+import packModelo.Partida;
+import packModelo.Tamagotchi;
+import packModelo.evoluciones.Evoluciones;
+
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -53,11 +60,15 @@ public class PantallaPrincipal extends JFrame implements Observer {
 	private JLabel lblCu1;
 	private JLabel lblCu2;
 	private JLabel lblCu3;
+	private ControladorBtnExit controladorExit;
+	private Partida partida;
 
 	/**
 	 * Create the frame.
 	 */
-	public PantallaPrincipal() {
+	public PantallaPrincipal(Partida pPartida) {
+		this.partida = pPartida;
+
 		setTitle("Tamagotchi");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -127,6 +138,7 @@ public class PantallaPrincipal extends JFrame implements Observer {
 			btnExit.setForeground(Color.GRAY);
 			btnExit.setBorder(null);
 			btnExit.setBorderPainted(false);
+			btnExit.addActionListener(this.getControladorBtnExit());
 		}
 		return btnExit;
 	}
@@ -360,9 +372,69 @@ public class PantallaPrincipal extends JFrame implements Observer {
 		return lblCu3;
 	}
 
+	private ControladorBtnExit getControladorBtnExit() {
+		if (controladorExit == null) {
+			controladorExit = new ControladorBtnExit();
+		}
+		return controladorExit;
+	}
+
+	private class ControladorBtnExit implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Auto-generated method stub
+			if(arg0.getSource().equals(btnExit)){
+				PantallaInicio.getPantallaInicio().setVisible(true);
+				partida.terminarPartida();
+			}
+		}
+	}
+
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'update'");
+		if(arg0 instanceof Tamagotchi){
+			if(arg1 instanceof Object[]){
+				Object[] datos = (Object[]) arg1;
+				Evoluciones evo = (Evoluciones) datos[2];
+				String evolucion = evo.evolucion();
+				int vida = (int) datos[3];
+				int hambre = (int) datos[4];
+				this.getLblEvolucion().setText("Evolucion: " + evolucion);
+				if(vida <= 30){
+					this.getLblCorazon1().setIcon(new ImageIcon(this.getClass().getResource("/imagenes/CorazonGris.png")));
+				}
+				if(vida <= 20){
+					this.getLblCorazon1().setIcon(new ImageIcon(this.getClass().getResource("/imagenes/CorazonGris.png")));
+					this.getLblCorazon2().setIcon(new ImageIcon(this.getClass().getResource("/imagenes/CorazonGris.png")));
+				}
+				if(vida <= 10){
+					this.getLblCorazon1().setIcon(new ImageIcon(this.getClass().getResource("/imagenes/CorazonGris.png")));
+					this.getLblCorazon2().setIcon(new ImageIcon(this.getClass().getResource("/imagenes/CorazonGris.png")));
+					this.getLblCorazon3().setIcon(new ImageIcon(this.getClass().getResource("/imagenes/CorazonGris.png")));
+				}
+
+				if(hambre <= 30){
+					this.getLblComida1().setIcon(new ImageIcon(this.getClass().getResource("/imagenes/CuencoGris.png")));
+				}
+				if(hambre <= 20){
+					this.getLblComida1().setIcon(new ImageIcon(this.getClass().getResource("/imagenes/CuencoGris.png")));
+					this.getLblComida2().setIcon(new ImageIcon(this.getClass().getResource("/imagenes/CuencoGris.png")));
+				}
+				if(hambre <= 10){
+					this.getLblComida1().setIcon(new ImageIcon(this.getClass().getResource("/imagenes/CuencoGris.png")));
+					this.getLblComida2().setIcon(new ImageIcon(this.getClass().getResource("/imagenes/CuencoGris.png")));
+					this.getLblComida3().setIcon(new ImageIcon(this.getClass().getResource("/imagenes/CuencoGris.png")));
+				}
+			}
+		}
+		if(arg0 instanceof Partida){
+			if(arg1 instanceof Object[]){
+				Object[] datos = (Object[]) arg1;
+				int score = (int) datos[0];
+				this.getLblPuntos().setText(score +"");
+			}
+		}
 	}
 }
