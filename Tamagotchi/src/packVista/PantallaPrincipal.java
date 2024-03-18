@@ -68,6 +68,7 @@ public class PantallaPrincipal extends JFrame implements Observer {
 	 */
 	public PantallaPrincipal(Partida pPartida) {
 		this.partida = pPartida;
+		partida.addObserver(this);
 
 		setTitle("Tamagotchi");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -387,53 +388,33 @@ public class PantallaPrincipal extends JFrame implements Observer {
 			if(arg0.getSource().equals(btnExit)){
 				PantallaInicio.getPantallaInicio().setVisible(true);
 				partida.terminarPartida();
+				setVisible(false);
 			}
 		}
 	}
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
+		ImageIcon imgCorazonGris = new ImageIcon(this.getClass().getResource("/imagenes/CorazonGris.png"));
+		ImageIcon imgCuencoGris = new ImageIcon(this.getClass().getResource("/imagenes/CuencoGris.png"));
 		// TODO Auto-generated method stub
-		if(arg0 instanceof Tamagotchi){
-			if(arg1 instanceof Object[]){
-				Object[] datos = (Object[]) arg1;
-				Evoluciones evo = (Evoluciones) datos[2];
-				String evolucion = evo.evolucion();
-				int vida = (int) datos[3];
-				int hambre = (int) datos[4];
-				this.getLblEvolucion().setText("Evolucion: " + evolucion);
-				if(vida <= 30){
-					this.getLblCorazon1().setIcon(new ImageIcon(this.getClass().getResource("/imagenes/CorazonGris.png")));
-				}
-				if(vida <= 20){
-					this.getLblCorazon1().setIcon(new ImageIcon(this.getClass().getResource("/imagenes/CorazonGris.png")));
-					this.getLblCorazon2().setIcon(new ImageIcon(this.getClass().getResource("/imagenes/CorazonGris.png")));
-				}
-				if(vida <= 10){
-					this.getLblCorazon1().setIcon(new ImageIcon(this.getClass().getResource("/imagenes/CorazonGris.png")));
-					this.getLblCorazon2().setIcon(new ImageIcon(this.getClass().getResource("/imagenes/CorazonGris.png")));
-					this.getLblCorazon3().setIcon(new ImageIcon(this.getClass().getResource("/imagenes/CorazonGris.png")));
-				}
-
-				if(hambre <= 30){
-					this.getLblComida1().setIcon(new ImageIcon(this.getClass().getResource("/imagenes/CuencoGris.png")));
-				}
-				if(hambre <= 20){
-					this.getLblComida1().setIcon(new ImageIcon(this.getClass().getResource("/imagenes/CuencoGris.png")));
-					this.getLblComida2().setIcon(new ImageIcon(this.getClass().getResource("/imagenes/CuencoGris.png")));
-				}
-				if(hambre <= 10){
-					this.getLblComida1().setIcon(new ImageIcon(this.getClass().getResource("/imagenes/CuencoGris.png")));
-					this.getLblComida2().setIcon(new ImageIcon(this.getClass().getResource("/imagenes/CuencoGris.png")));
-					this.getLblComida3().setIcon(new ImageIcon(this.getClass().getResource("/imagenes/CuencoGris.png")));
-				}
-			}
-		}
 		if(arg0 instanceof Partida){
-			if(arg1 instanceof Object[]){
-				Object[] datos = (Object[]) arg1;
-				int score = (int) datos[0];
-				this.getLblPuntos().setText(score +"");
+			Object[] array = (Object[]) arg1;
+			this.getLblPuntos().setText((int) array[0] +"");
+			if((int) array[1] <= 30){
+				getLblCorazon1().setIcon(imgCorazonGris);
+			}
+			if((int) array[2] <= 30) {
+				getLblComida1().setIcon(imgCuencoGris);
+			}
+			if((int) array[2] <= 20) {
+				getLblComida2().setIcon(imgCuencoGris);
+			}
+			if((int) array[2] <= 10) {
+				getLblComida3().setIcon(imgCuencoGris);
+			}
+			if((int) array[2] <= 0) {
+				getLblComida4().setIcon(imgCuencoGris);
 			}
 		}
 	}

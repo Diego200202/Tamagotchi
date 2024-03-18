@@ -22,6 +22,9 @@ public class ListaJugadores extends Observable{
         Jugador j4 = new Jugador("UGP", 20);
         this.lista.add(j4);
 
+        Jugador j5 = new Jugador("BBB", 0);
+        this.lista.add(j5);
+
         lista.sort(Comparator.comparing(Jugador::getScore).reversed());
     }
 

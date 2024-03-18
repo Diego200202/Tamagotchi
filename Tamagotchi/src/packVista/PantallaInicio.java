@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import packModelo.Juego;
 import packModelo.Jugador;
 import packModelo.ListaJugadores;
 import packModelo.Partida;
@@ -509,17 +510,7 @@ public class PantallaInicio extends JFrame implements Observer {
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
 			if(arg0.getSource().equals(btnPlay)){
-				Jugador jugador = new Jugador(textFieldNombre.getText(), 0);
-				Partida p = new Partida(jugador);
-				PantallaPrincipal pc = new PantallaPrincipal(p);
-				Tamagotchi t = new Tamagotchi();
-				p.addObserver(pc);
-				t.addObserver(pc);
-				pc.setVisible(true);
-				setVisible(false);
-			}
-			if(arg0.getSource().equals(btnExit)){
-				dispose();
+				Juego.getJuego().iniciarPartida(getTextFieldNombre().getText());
 			}
 		}
 
@@ -554,30 +545,6 @@ public class PantallaInicio extends JFrame implements Observer {
 							case 4:
 								getLblName5().setText(jugador.getNombre());
 								getLblScore5().setText(String.valueOf(jugador.getScore()));
-								break;
-						}
-					} else {
-						// Si jugador es null, establecer los JLabels correspondientes como vacíos
-						switch (i) {
-							case 0:
-								getLblName1().setText("");
-								getLblScore1().setText("");
-								break;
-							case 1:
-								getLblName2().setText("");
-								getLblScore2().setText("");
-								break;
-							case 2:
-								getLblName3().setText("");
-								getLblScore3().setText("");
-								break;
-							case 3:
-								getLblName4().setText("");
-								getLblScore4().setText("");
-								break;
-							case 4:
-								getLblName5().setText("");
-								getLblScore5().setText("");
 								break;
 						}
 					}

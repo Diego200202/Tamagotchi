@@ -9,14 +9,14 @@ import java.util.TimerTask;
 import packModelo.evoluciones.Egg;
 import packModelo.evoluciones.Evoluciones;
 import packModelo.evoluciones.Kuchipatchi;
+import packModelo.evoluciones.Maskutchi;
 
-public class Tamagotchi extends Observable{
+public class Tamagotchi{
     private int vida;
     private int vidaMaxima;
     private int hambre;
     private int hambreMaxima;
     private Evoluciones evo = new Kuchipatchi();
-    private boolean estaMuerto = false;
     private boolean estaCagado = false;
     private boolean estaEnfermo = false;
     private Random random = new Random();
@@ -34,7 +34,6 @@ public class Tamagotchi extends Observable{
 				bajarVidaComida();
                 cagarse();
                 ponerEnfermo();
-                setDatos(estaCagado, estaEnfermo, evo, vida, hambre);
 			}		
 		};
 		timer = new Timer();
@@ -68,15 +67,22 @@ public class Tamagotchi extends Observable{
         this.hambre -= evo.decrementoComida();
     }
 
-    public void setDatos(boolean pCagado, boolean pEnfermo, Evoluciones pEvo, int pVida, int pHambre){
-        this.estaCagado = pCagado;
-        this.estaEnfermo = pEnfermo;
-        this.evo = pEvo;
-        this.hambre = pHambre;
-        this.vida = pVida;
+    public int getVida(){
+        return this.vida;
+    }
 
-        this.setChanged();
-        this.notifyObservers(new Object[] {pCagado, pEnfermo, evo, vida, hambre});
-        
+    public int getHambre(){
+        return this.hambre;
+    }
+
+    public void evolucionar(){
+
+    }
+
+    public boolean estaMuerto(){
+        if (this.vida <= 0 || this.hambre <= 0) {
+            return true;
+        }
+        return false;
     }
 }
