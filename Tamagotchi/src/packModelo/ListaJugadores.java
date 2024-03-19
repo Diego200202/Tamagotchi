@@ -10,7 +10,7 @@ public class ListaJugadores extends Observable{
     private ArrayList<Jugador> lista = new ArrayList<>();
 
     private ListaJugadores(){
-        Jugador j1 = new Jugador("AAA", 46);
+        Jugador j1 = new Jugador("AMD", 46);
         this.lista.add(j1);
 
         Jugador j2 = new Jugador("DEZ", 70);

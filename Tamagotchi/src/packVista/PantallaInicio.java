@@ -76,6 +76,7 @@ public class PantallaInicio extends JFrame implements Observer {
 	 */
 	private PantallaInicio() {
 		ListaJugadores.getListaJugadores().addObserver(this);
+		Juego.getJuego().addObserver(this);
 
 		setTitle("Tamagotchi");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -521,7 +522,6 @@ public class PantallaInicio extends JFrame implements Observer {
 		if (arg0 instanceof ListaJugadores) {// TODO Auto-generated method stub
 			if (arg1 instanceof Jugador[]) {
 				Jugador[] jugadores = (Jugador[]) arg1;
-
 				for (int i = 0; i < jugadores.length; i++) {
 					Jugador jugador = jugadores[i];
 					if (jugador != null) {
@@ -550,6 +550,11 @@ public class PantallaInicio extends JFrame implements Observer {
 					}
 				}
 			}
+		}
+		if(arg0 instanceof Juego){
+			PantallaPrincipal pP = new PantallaPrincipal((Partida) arg1);
+			this.setVisible(false);
+			pP.setVisible(true);
 		}
 	}
 }

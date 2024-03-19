@@ -56,7 +56,7 @@ public class Tamagotchi{
         if(!estaEnfermo){
             int num = random.nextInt(100);
             if(num <= 29){
-                this.estaCagado = true;
+                this.estaEnfermo = true;
             }
         }
     }
@@ -79,8 +79,18 @@ public class Tamagotchi{
     }
 
     public void bajarVidaComida(){
-        this.vida -= evo.decrementoCorazones();
-        this.hambre -= evo.decrementoComida();
+        int i = 0;
+        int j = 0;
+        if(estaCagado){
+            i = 5;
+            j = 10;
+        }
+        if (estaEnfermo) {
+            i = 7;
+            j = 5;
+        }
+        this.vida = this.vida - this.evo.decrementoCorazones() - i;
+        this.hambre = this.hambre - evo.decrementoComida() +j;
     }
 
     public int getVida(){
@@ -121,5 +131,13 @@ public class Tamagotchi{
 
     public String getEvolucion(){
         return this.evo.evolucion();
+    }
+
+    public boolean estaCagado(){
+        return this.estaCagado;
+    }
+
+    public boolean estaEnfermo(){
+        return this.estaEnfermo;
     }
 }

@@ -26,8 +26,14 @@ public class Partida extends Observable{
                     score += 20;
                     evolucionadoMarutchi = true;
                 }
+                if(tamagotchi.estaCagado()){
+                    score -= 5;
+                }
+                if(tamagotchi.estaEnfermo()){
+                    score -= 5;
+                }
                 setChanged();
-                notifyObservers(new Object[] {score, tamagotchi.getVida(), tamagotchi.getHambre(), tamagotchi.getEvolucion()});
+                notifyObservers(new Object[] {score, tamagotchi.getVida(), tamagotchi.getHambre(), tamagotchi.getEvolucion(), tamagotchi.estaCagado(), tamagotchi.estaEnfermo()});
                 terminarPartida(tamagotchi.estaMuerto());
 			}		
 		};
@@ -42,5 +48,13 @@ public class Partida extends Observable{
             jugador.setScore(score);
             ListaJugadores.getListaJugadores().addJugador(this.jugador);    
         }
+    }
+
+    public void limpiar(){
+        this.tamagotchi.limpiar();
+    }
+
+    public void curar(){
+        this.tamagotchi.curar();
     }
 }

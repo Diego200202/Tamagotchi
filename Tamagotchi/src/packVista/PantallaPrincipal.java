@@ -9,8 +9,11 @@ import packModelo.Partida;
 
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -31,7 +34,7 @@ public class PantallaPrincipal extends JFrame implements Observer {
 	private JPanel panel;
 	private JLabel lblPuntos;
 	private JButton btnExit;
-	private JPanel panelFoto;
+	private JPanel panelMedio;
 	private JLabel lblFoto;
 	private JPanel panelCorazones;
 	private JLabel lblCorazon1;
@@ -58,6 +61,13 @@ public class PantallaPrincipal extends JFrame implements Observer {
 	private JLabel lblCu3;
 	private ControladorBtnExit controladorExit;
 	private Partida partida;
+	private JPanel panelFotoKk;
+	private JLabel lblFotoKk;
+	private JPanel panelFotoTamagotchi;
+	private JPanel panelFotoVirus;
+	private JLabel lblFotoVirus;
+	private JLabel lblFotoJeringuilla;
+	private JLabel lblFotoPapel;
 
 	/**
 	 * Create the frame.
@@ -76,7 +86,7 @@ public class PantallaPrincipal extends JFrame implements Observer {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 		contentPane.add(getPanelDatos(), BorderLayout.NORTH);
-		contentPane.add(getPanelFoto(), BorderLayout.CENTER);
+		contentPane.add(getPanelMedio(), BorderLayout.CENTER);
 		contentPane.add(getPanelCorazones(), BorderLayout.WEST);
 		contentPane.add(getPanelComida(), BorderLayout.EAST);
 		contentPane.add(getPanelAbajo(), BorderLayout.SOUTH);
@@ -139,13 +149,16 @@ public class PantallaPrincipal extends JFrame implements Observer {
 		}
 		return btnExit;
 	}
-	private JPanel getPanelFoto() {
-		if (panelFoto == null) {
-			panelFoto = new JPanel();
-			panelFoto.setBackground(Color.BLACK);
-			panelFoto.add(getLblFoto());
+	private JPanel getPanelMedio() {
+		if (panelMedio == null) {
+			panelMedio = new JPanel();
+			panelMedio.setBackground(Color.BLACK);
+			panelMedio.setLayout(new BorderLayout(0, 0));
+			panelMedio.add(getPanelFotoKk(), BorderLayout.SOUTH);
+			panelMedio.add(getPanelFotoTamagotchi(), BorderLayout.CENTER);
+			panelMedio.add(getPanelFotoVirus(), BorderLayout.WEST);
 		}
-		return panelFoto;
+		return panelMedio;
 	}
 	private JLabel getLblFoto() {
 		if (lblFoto == null) {
@@ -367,6 +380,135 @@ public class PantallaPrincipal extends JFrame implements Observer {
 			lblCu3.setIcon(img);
 		}
 		return lblCu3;
+	}	private JPanel getPanelFotoKk() {
+		if (panelFotoKk == null) {
+			panelFotoKk = new JPanel();
+			panelFotoKk.setBackground(Color.BLACK);
+			panelFotoKk.add(getLblFotoKk());
+			panelFotoKk.add(getLblFotoPapel());
+		}
+		return panelFotoKk;
+	}
+	private JLabel getLblFotoKk() {
+		if (lblFotoKk == null) {
+			lblFotoKk = new JLabel("");
+			ImageIcon img = new ImageIcon(this.getClass().getResource("/imagenes/kk.png"));
+			lblFotoKk.setIcon(img);
+			lblFotoKk.setVisible(false);
+			lblFotoKk.addMouseListener(new MouseListener() {
+
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+					// TODO Auto-generated method stub
+
+					getLblFotoPapel().setVisible(true);
+					partida.limpiar();
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent arg0) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mouseExited(MouseEvent arg0) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mousePressed(MouseEvent arg0) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mouseReleased(MouseEvent arg0) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+			});
+		}
+		return lblFotoKk;
+	}
+	private JPanel getPanelFotoTamagotchi() {
+		if (panelFotoTamagotchi == null) {
+			panelFotoTamagotchi = new JPanel();
+			panelFotoTamagotchi.setBackground(Color.BLACK);
+			panelFotoTamagotchi.add(getLblFoto());
+		}
+		return panelFotoTamagotchi;
+	}
+	private JPanel getPanelFotoVirus() {
+		if (panelFotoVirus == null) {
+			panelFotoVirus = new JPanel();
+			panelFotoVirus.setBackground(Color.BLACK);
+			panelFotoVirus.add(getLblFotoVirus());
+			panelFotoVirus.add(getLblFotoJeringuilla());
+		}
+		return panelFotoVirus;
+	}
+	private JLabel getLblFotoVirus() {
+		if (lblFotoVirus == null) {
+			lblFotoVirus = new JLabel("");
+			ImageIcon img = new ImageIcon(this.getClass().getResource("/imagenes/Virus.png"));
+			lblFotoVirus.setIcon(img);
+			lblFotoVirus.setVisible(false);
+			lblFotoVirus.addMouseListener(new MouseListener() {
+
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+					// TODO Auto-generated method stub
+					getLblFotoJeringuilla().setVisible(true);
+					partida.curar();
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent arg0) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mouseExited(MouseEvent arg0) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mousePressed(MouseEvent arg0) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mouseReleased(MouseEvent arg0) {
+					// TODO Auto-generated method stub
+					
+				}
+			});
+		}
+		return lblFotoVirus;
+	}
+	private JLabel getLblFotoJeringuilla() {
+		if (lblFotoJeringuilla == null) {
+			lblFotoJeringuilla = new JLabel("");
+			ImageIcon img = new ImageIcon(this.getClass().getResource("/imagenes/shot.png"));
+			lblFotoJeringuilla.setIcon(img);
+			lblFotoJeringuilla.setVisible(false);
+		}
+		return lblFotoJeringuilla;
+	}
+	private JLabel getLblFotoPapel() {
+		if (lblFotoPapel == null) {
+			lblFotoPapel = new JLabel("");
+			ImageIcon img = new ImageIcon(this.getClass().getResource("/imagenes/paper.png"));
+			lblFotoPapel.setIcon(img);
+			lblFotoPapel.setVisible(false);
+		}
+		return lblFotoPapel;
 	}
 
 	private ControladorBtnExit getControladorBtnExit() {
@@ -393,6 +535,7 @@ public class PantallaPrincipal extends JFrame implements Observer {
 	public void update(Observable arg0, Object arg1) {
 		ImageIcon imgCorazonGris = new ImageIcon(this.getClass().getResource("/imagenes/CorazonGris.png"));
 		ImageIcon imgCuencoGris = new ImageIcon(this.getClass().getResource("/imagenes/CuencoGris.png"));
+		ImageIcon imgVirus = new ImageIcon(this.getClass().getResource("/imagenes/Virus.png"));
 		// TODO Auto-generated method stub
 		if(arg0 instanceof Partida){
 			Object[] array = (Object[]) arg1;
@@ -415,6 +558,20 @@ public class PantallaPrincipal extends JFrame implements Observer {
 			ImageIcon imgTamagotchi = new ImageIcon(this.getClass().getResource("/imagenes/"+array[3]+"1.png"));
 			getLblEvolucion().setText((String) array[3]);
 			getLblFoto().setIcon(imgTamagotchi);
+
+			if((boolean) array[4]){
+				getLblFotoKk().setVisible(true);
+			}else{
+				getLblFotoKk().setVisible(false);
+				getLblFotoPapel().setVisible(false);
+			}
+
+			if((boolean) array[5]){
+				getLblFotoVirus().setVisible(true);
+			}else{
+				getLblFotoVirus().setVisible(false);
+				getLblFotoJeringuilla().setVisible(false);
+			}
 		}
 	}
 }
