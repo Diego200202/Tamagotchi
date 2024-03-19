@@ -1,15 +1,11 @@
 package packVista;
 
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import packModelo.Jugador;
 import packModelo.Partida;
-import packModelo.Tamagotchi;
-import packModelo.evoluciones.Evoluciones;
 
 import java.awt.Color;
 import java.awt.GridLayout;
@@ -99,7 +95,7 @@ public class PantallaPrincipal extends JFrame implements Observer {
 	}
 	private JLabel getLblEvolucion() {
 		if (lblEvolucion == null) {
-			lblEvolucion = new JLabel("Evolucion");
+			lblEvolucion = new JLabel("Egg");
 			lblEvolucion.setHorizontalAlignment(SwingConstants.CENTER);
 			lblEvolucion.setForeground(Color.WHITE);
 			lblEvolucion.setBackground(Color.BLACK);
@@ -387,7 +383,7 @@ public class PantallaPrincipal extends JFrame implements Observer {
 			// TODO Auto-generated method stub
 			if(arg0.getSource().equals(btnExit)){
 				PantallaInicio.getPantallaInicio().setVisible(true);
-				partida.terminarPartida();
+				partida.terminarPartida(true);
 				setVisible(false);
 			}
 		}
@@ -416,6 +412,9 @@ public class PantallaPrincipal extends JFrame implements Observer {
 			if((int) array[2] <= 0) {
 				getLblComida4().setIcon(imgCuencoGris);
 			}
+			ImageIcon imgTamagotchi = new ImageIcon(this.getClass().getResource("/imagenes/"+array[3]+"1.png"));
+			getLblEvolucion().setText((String) array[3]);
+			getLblFoto().setIcon(imgTamagotchi);
 		}
 	}
 }

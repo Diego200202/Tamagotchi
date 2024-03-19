@@ -21,16 +21,16 @@ public class Partida extends Observable{
 			public void run() {
 				score += 1;
                 setChanged();
-                notifyObservers(new Object[] {score, tamagotchi.getVida(), tamagotchi.getHambre()});
-                terminarPartida();
+                notifyObservers(new Object[] {score, tamagotchi.getVida(), tamagotchi.getHambre(), tamagotchi.getEvolucion()});
+                terminarPartida(tamagotchi.estaMuerto());
 			}		
 		};
 		timer = new Timer();
 		timer.scheduleAtFixedRate(timerTask, 0, 4000);
     }
 
-    public void terminarPartida(){
-        if(this.tamagotchi.estaMuerto()){
+    public void terminarPartida(boolean pMuerto){
+        if(pMuerto){
             PantallaInicio.getPantallaInicio().setVisible(true);
             this.timer.cancel();
             jugador.setScore(score);
