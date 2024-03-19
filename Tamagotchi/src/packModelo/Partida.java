@@ -11,22 +11,28 @@ public class Partida extends Observable{
     private Timer timer = null;
     private Jugador jugador;
     private Tamagotchi tamagotchi;
+    private boolean evolucionadoMarutchi = false;
 
     public Partida(Jugador pJugador, Tamagotchi pTamagotchi){
         this.jugador = pJugador;
         this.tamagotchi = pTamagotchi;
-
+       
         TimerTask timerTask = new TimerTask() {
 			@Override
 			public void run() {
 				score += 1;
+                String evo = tamagotchi.getEvolucion();
+                if(evo.equalsIgnoreCase("Marutchi") && !evolucionadoMarutchi){
+                    score += 20;
+                    evolucionadoMarutchi = true;
+                }
                 setChanged();
                 notifyObservers(new Object[] {score, tamagotchi.getVida(), tamagotchi.getHambre(), tamagotchi.getEvolucion()});
                 terminarPartida(tamagotchi.estaMuerto());
 			}		
 		};
 		timer = new Timer();
-		timer.scheduleAtFixedRate(timerTask, 0, 4000);
+		timer.scheduleAtFixedRate(timerTask, 4000, 4000);
     }
 
     public void terminarPartida(boolean pMuerto){
