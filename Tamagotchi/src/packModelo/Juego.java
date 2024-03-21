@@ -22,8 +22,9 @@ public class Juego extends Observable{
     public void iniciarPartida(String pNombre){
         Jugador jugador = new Jugador(pNombre, 0);
         Tamagotchi tamagotchi = new Tamagotchi();
-        Partida partida = new Partida(jugador, tamagotchi);
+        Partida.gePartida().setJugador(jugador);
+        Partida.gePartida().setTamagotchi(tamagotchi);
         setChanged();
-        notifyObservers(partida);
+        notifyObservers(Partida.gePartida());
     }
 }

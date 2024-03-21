@@ -13,75 +13,63 @@ import packModelo.evoluciones.Marutchi;
 import packModelo.evoluciones.Maskutchi;
 import packModelo.evoluciones.Mimitchi;
 
-public class Tamagotchi{
+public class Tamagotchi {
     private int vida;
-    private int vidaMaxima;
     private int hambre;
-    private int hambreMaxima;
     private Evoluciones evo = new Egg();
     private boolean estaCagado = false;
     private boolean estaEnfermo = false;
     private Random random = new Random();
-    private Timer timer4seg;
     private Timer timerEvolucionar;
+    private boolean puedeCagar = true;
+    private boolean puedeEnfermar = true;
 
-    public Tamagotchi(){
+    public Tamagotchi() {
         this.vida = 40;
-        this.vidaMaxima = 40;
         this.hambre = 40;
-        this.hambreMaxima = 40;  
-
-        TimerTask timerTask4seg = new TimerTask() {
-			@Override
-			public void run() {
-				bajarVidaComida();
-                cagarse();
-                ponerEnfermo();
-			}		
-		};
-		timer4seg = new Timer();
-		timer4seg.scheduleAtFixedRate(timerTask4seg, 4000,4000);
 
         TimerTask timerTask15seg = new TimerTask() {
-			@Override
-			public void run() {
-				evolucionar();
-			}		
-		};
-		timerEvolucionar = new Timer();
-		timerEvolucionar.scheduleAtFixedRate(timerTask15seg, 8000, 8000);
+            @Override
+            public void run() {
+                evolucionar();
+            }
+        };
+        timerEvolucionar = new Timer();
+        timerEvolucionar.scheduleAtFixedRate(timerTask15seg, 8000, 8000);
     }
 
-    public void ponerEnfermo(){
-        if(!estaEnfermo){
+    public void ponerEnfermo() {
+        if (!estaEnfermo && !estaCagado && puedeEnfermar) {
             int num = random.nextInt(100);
-            if(num <= 29){
+            if (num <= 29) {
                 this.estaEnfermo = true;
+                puedeEnfermar(false);
             }
         }
     }
 
-    public void cagarse(){
-        if(!estaCagado){
+    public void cagarse() {
+        if (!estaCagado && !estaEnfermo && puedeCagar) {
             int num = random.nextInt(100);
-            if(num <= 19){
+            if (num <= 19) {
                 this.estaCagado = true;
+                puedeCagar(false);
             }
         }
     }
 
-    public void limpiar(){
+    public void limpiar() {
         this.estaCagado = false;
     }
 
-    public void curar(){
+    public void curar() {
         this.estaEnfermo = false;
     }
 
-    public void bajarVidaComida(){
+    public void bajarVidaComida() {
         int i = 0;
         int j = 0;
-        if(estaCagado){
+        if (estaCagado) {
             i = 5;
             j = 10;
         }
@@ -90,54 +78,78 @@ public class Tamagotchi{
             j = 5;
         }
         this.vida = this.vida - this.evo.decrementoCorazones() - i;
-        this.hambre = this.hambre - evo.decrementoComida() +j;
+        this.hambre = this.hambre - evo.decrementoComida() + j;
     }
 
-    public int getVida(){
+    public int getVida() {
         return this.vida;
     }
 
-    public int getHambre(){
+    public int getHambre() {
         return this.hambre;
     }
 
-    public void evolucionar(){
+    public void evolucionar() {
         boolean evolucionado = false;
-        while(!evolucionado){
-            if(this.evo.evolucion().equalsIgnoreCase("Egg")){
+        while (!evolucionado) {
+            if (this.evo.evolucion().equalsIgnoreCase("Egg")) {
                 this.evo = new Kuchipatchi();
                 evolucionado = true;
-            }else if (this.getEvolucion().equalsIgnoreCase("Kuchipatchi")) {
+            } else if (this.getEvolucion().equalsIgnoreCase("Kuchipatchi")) {
                 this.evo = new Mimitchi();
                 evolucionado = true;
-            }else if (this.getEvolucion().equalsIgnoreCase("Mimitchi")) {
-                if(this.getVida() >= 30 || this.getHambre() >= 30){
+            } else if (this.getEvolucion().equalsIgnoreCase("Mimitchi")) {
+                if (this.getVida() >= 30 && this.getHambre() >= 30) {
                     this.evo = new Marutchi();
                     evolucionado = true;
-                }else{
+                } else {
                     this.evo = new Maskutchi();
                     evolucionado = true;
                 }
-            }           
+            }
         }
     }
 
-    public boolean estaMuerto(){
+    public boolean estaMuerto() {
         if (this.vida <= 0 || this.hambre <= 0) {
             return true;
         }
         return false;
     }
 
-    public String getEvolucion(){
+    public String getEvolucion() {
         return this.evo.evolucion();
     }
 
-    public boolean estaCagado(){
+    public boolean estaCagado() {
         return this.estaCagado;
     }
 
-    public boolean estaEnfermo(){
+    public boolean estaEnfermo() {
         return this.estaEnfermo;
+    }
+
+    public void puedeCagar(boolean pBoolean) {
+        this.puedeCagar = pBoolean;
+    }
+
+    public void puedeEnfermar(boolean pBoolean) {
+        this.puedeEnfermar = pBoolean;
+    }
+
+    public void comerPiruleta() {
+        this.vida += 10;
+    }
+
+    public void comerSopa() {
+        this.hambre += 10;
+    }
+
+    public void setVida(int pVida){
+        this.vida = pVida;
+    }
+
+    public void setHambre(int pHambre){
+        this.hambre = pHambre;
     }
 }

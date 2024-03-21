@@ -510,7 +510,7 @@ public class PantallaInicio extends JFrame implements Observer {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
-			if(arg0.getSource().equals(btnPlay)){
+			if (arg0.getSource().equals(btnPlay)) {
 				Juego.getJuego().iniciarPartida(getTextFieldNombre().getText());
 			}
 		}
@@ -551,8 +551,8 @@ public class PantallaInicio extends JFrame implements Observer {
 				}
 			}
 		}
-		if(arg0 instanceof Juego){
-			PantallaPrincipal pP = new PantallaPrincipal((Partida) arg1);
+		if (arg0 instanceof Juego) {
+			PantallaPrincipal pP = new PantallaPrincipal();
 			this.setVisible(false);
 			pP.setVisible(true);
 		}

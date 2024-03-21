@@ -1,6 +1,5 @@
 package packVista;
 
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -49,18 +48,17 @@ public class PantallaPrincipal extends JFrame implements Observer {
 	private JPanel panelAbajo;
 	private JPanel panelIzda;
 	private JPanel panelDer;
-	private JLabel lblCandy;
+	private JButton btnCandy;
 	private JPanel panelPiruletas;
 	private JLabel lblPir1;
 	private JLabel lblPir2;
 	private JLabel lblPir3;
-	private JLabel lblSoup;
+	private JButton btnSoup;
 	private JPanel panelCucharas;
 	private JLabel lblCu1;
 	private JLabel lblCu2;
 	private JLabel lblCu3;
 	private ControladorBtnExit controladorExit;
-	private Partida partida;
 	private JPanel panelFotoKk;
 	private JLabel lblFotoKk;
 	private JPanel panelFotoTamagotchi;
@@ -68,13 +66,13 @@ public class PantallaPrincipal extends JFrame implements Observer {
 	private JLabel lblFotoVirus;
 	private JLabel lblFotoJeringuilla;
 	private JLabel lblFotoPapel;
+	private ControladorBotones controlador = null;
 
 	/**
 	 * Create the frame.
 	 */
-	public PantallaPrincipal(Partida pPartida) {
-		this.partida = pPartida;
-		partida.addObserver(this);
+	public PantallaPrincipal() {
+		Partida.gePartida().addObserver(this);
 
 		setTitle("Tamagotchi");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -103,6 +101,7 @@ public class PantallaPrincipal extends JFrame implements Observer {
 		}
 		return panelDatos;
 	}
+
 	private JLabel getLblEvolucion() {
 		if (lblEvolucion == null) {
 			lblEvolucion = new JLabel("Egg");
@@ -112,6 +111,7 @@ public class PantallaPrincipal extends JFrame implements Observer {
 		}
 		return lblEvolucion;
 	}
+
 	private JLabel getLblScore() {
 		if (lblScore == null) {
 			lblScore = new JLabel("Score: ");
@@ -120,6 +120,7 @@ public class PantallaPrincipal extends JFrame implements Observer {
 		}
 		return lblScore;
 	}
+
 	private JPanel getPanel() {
 		if (panel == null) {
 			panel = new JPanel();
@@ -130,6 +131,7 @@ public class PantallaPrincipal extends JFrame implements Observer {
 		}
 		return panel;
 	}
+
 	private JLabel getLblPuntos() {
 		if (lblPuntos == null) {
 			lblPuntos = new JLabel("0");
@@ -137,6 +139,7 @@ public class PantallaPrincipal extends JFrame implements Observer {
 		}
 		return lblPuntos;
 	}
+
 	private JButton getBtnExit() {
 		if (btnExit == null) {
 			btnExit = new JButton("exit");
@@ -149,6 +152,7 @@ public class PantallaPrincipal extends JFrame implements Observer {
 		}
 		return btnExit;
 	}
+
 	private JPanel getPanelMedio() {
 		if (panelMedio == null) {
 			panelMedio = new JPanel();
@@ -160,6 +164,7 @@ public class PantallaPrincipal extends JFrame implements Observer {
 		}
 		return panelMedio;
 	}
+
 	private JLabel getLblFoto() {
 		if (lblFoto == null) {
 			lblFoto = new JLabel("");
@@ -168,6 +173,7 @@ public class PantallaPrincipal extends JFrame implements Observer {
 		}
 		return lblFoto;
 	}
+
 	private JPanel getPanelCorazones() {
 		if (panelCorazones == null) {
 			panelCorazones = new JPanel();
@@ -180,6 +186,7 @@ public class PantallaPrincipal extends JFrame implements Observer {
 		}
 		return panelCorazones;
 	}
+
 	private JLabel getLblCorazon1() {
 		if (lblCorazon1 == null) {
 			lblCorazon1 = new JLabel("");
@@ -189,6 +196,7 @@ public class PantallaPrincipal extends JFrame implements Observer {
 		}
 		return lblCorazon1;
 	}
+
 	private JLabel getLblCorazon2() {
 		if (lblCorazon2 == null) {
 			lblCorazon2 = new JLabel("");
@@ -198,6 +206,7 @@ public class PantallaPrincipal extends JFrame implements Observer {
 		}
 		return lblCorazon2;
 	}
+
 	private JLabel getLblCorazon3() {
 		if (lblCorazon3 == null) {
 			lblCorazon3 = new JLabel("");
@@ -207,6 +216,7 @@ public class PantallaPrincipal extends JFrame implements Observer {
 		}
 		return lblCorazon3;
 	}
+
 	private JLabel getLblCorazon4() {
 		if (lblCorazon4 == null) {
 			lblCorazon4 = new JLabel("");
@@ -216,6 +226,7 @@ public class PantallaPrincipal extends JFrame implements Observer {
 		}
 		return lblCorazon4;
 	}
+
 	private JPanel getPanelComida() {
 		if (panelComida == null) {
 			panelComida = new JPanel();
@@ -228,6 +239,7 @@ public class PantallaPrincipal extends JFrame implements Observer {
 		}
 		return panelComida;
 	}
+
 	private JLabel getLblComida1() {
 		if (lblComida1 == null) {
 			lblComida1 = new JLabel("");
@@ -236,6 +248,7 @@ public class PantallaPrincipal extends JFrame implements Observer {
 		}
 		return lblComida1;
 	}
+
 	private JLabel getLblComida2() {
 		if (lblComida2 == null) {
 			lblComida2 = new JLabel("");
@@ -244,6 +257,7 @@ public class PantallaPrincipal extends JFrame implements Observer {
 		}
 		return lblComida2;
 	}
+
 	private JLabel getLblComida3() {
 		if (lblComida3 == null) {
 			lblComida3 = new JLabel("");
@@ -252,6 +266,7 @@ public class PantallaPrincipal extends JFrame implements Observer {
 		}
 		return lblComida3;
 	}
+
 	private JLabel getLblComida4() {
 		if (lblComida4 == null) {
 			lblComida4 = new JLabel("");
@@ -260,6 +275,7 @@ public class PantallaPrincipal extends JFrame implements Observer {
 		}
 		return lblComida4;
 	}
+
 	private JPanel getPanelAbajo() {
 		if (panelAbajo == null) {
 			panelAbajo = new JPanel();
@@ -270,34 +286,41 @@ public class PantallaPrincipal extends JFrame implements Observer {
 		}
 		return panelAbajo;
 	}
+
 	private JPanel getPanelIzda() {
 		if (panelIzda == null) {
 			panelIzda = new JPanel();
 			panelIzda.setBackground(Color.BLACK);
 			panelIzda.setLayout(new GridLayout(2, 1, 0, 0));
-			panelIzda.add(getLblCandy());
+			panelIzda.add(getBtnCandy());
 			panelIzda.add(getPanelPiruletas());
 		}
 		return panelIzda;
 	}
+
 	private JPanel getPanelDer() {
 		if (panelDer == null) {
 			panelDer = new JPanel();
 			panelDer.setBackground(Color.BLACK);
 			panelDer.setLayout(new GridLayout(2, 1, 0, 0));
-			panelDer.add(getLblSoup());
+			panelDer.add(getBtnSoup());
 			panelDer.add(getPanelCucharas());
 		}
 		return panelDer;
 	}
-	private JLabel getLblCandy() {
-		if (lblCandy == null) {
-			lblCandy = new JLabel("Candy");
-			lblCandy.setHorizontalAlignment(SwingConstants.CENTER);
-			lblCandy.setForeground(Color.WHITE);
+
+	private JButton getBtnCandy() {
+		if (btnCandy == null) {
+			btnCandy = new JButton("Candy");
+			btnCandy.setHorizontalAlignment(SwingConstants.CENTER);
+			btnCandy.setForeground(Color.WHITE);
+			btnCandy.setBackground(Color.BLACK);
+			btnCandy.setBorder(null);
+			btnCandy.addActionListener(getControlador());
 		}
-		return lblCandy;
+		return btnCandy;
 	}
+
 	private JPanel getPanelPiruletas() {
 		if (panelPiruletas == null) {
 			panelPiruletas = new JPanel();
@@ -310,41 +333,43 @@ public class PantallaPrincipal extends JFrame implements Observer {
 		}
 		return panelPiruletas;
 	}
+
 	private JLabel getLblPir1() {
 		if (lblPir1 == null) {
 			lblPir1 = new JLabel("");
 			lblPir1.setBackground(Color.BLACK);
-			ImageIcon img = new ImageIcon(this.getClass().getResource("/imagenes/candy.png"));
-			lblPir1.setIcon(img);
 		}
 		return lblPir1;
 	}
+
 	private JLabel getLblPir2() {
 		if (lblPir2 == null) {
 			lblPir2 = new JLabel("");
 			lblPir2.setBackground(Color.BLACK);
-			ImageIcon img = new ImageIcon(this.getClass().getResource("/imagenes/candy.png"));
-			lblPir2.setIcon(img);
 		}
 		return lblPir2;
 	}
+
 	private JLabel getLblPir3() {
 		if (lblPir3 == null) {
 			lblPir3 = new JLabel("");
 			lblPir3.setBackground(Color.BLACK);
-			ImageIcon img = new ImageIcon(this.getClass().getResource("/imagenes/candy.png"));
-			lblPir3.setIcon(img);
 		}
 		return lblPir3;
 	}
-	private JLabel getLblSoup() {
-		if (lblSoup == null) {
-			lblSoup = new JLabel("Soup");
-			lblSoup.setHorizontalAlignment(SwingConstants.CENTER);
-			lblSoup.setForeground(Color.WHITE);
+
+	private JButton getBtnSoup() {
+		if (btnSoup == null) {
+			btnSoup = new JButton("Soup");
+			btnSoup.setHorizontalAlignment(SwingConstants.CENTER);
+			btnSoup.setForeground(Color.WHITE);
+			btnSoup.setBackground(Color.BLACK);
+			btnSoup.setBorder(null);
+			btnSoup.addActionListener(getControlador());
 		}
-		return lblSoup;
+		return btnSoup;
 	}
+
 	private JPanel getPanelCucharas() {
 		if (panelCucharas == null) {
 			panelCucharas = new JPanel();
@@ -357,30 +382,29 @@ public class PantallaPrincipal extends JFrame implements Observer {
 		}
 		return panelCucharas;
 	}
+
 	private JLabel getLblCu1() {
 		if (lblCu1 == null) {
 			lblCu1 = new JLabel("");
-			ImageIcon img = new ImageIcon(this.getClass().getResource("/imagenes/spoon.png"));
-			lblCu1.setIcon(img);
 		}
 		return lblCu1;
 	}
+
 	private JLabel getLblCu2() {
 		if (lblCu2 == null) {
 			lblCu2 = new JLabel("");
-			ImageIcon img = new ImageIcon(this.getClass().getResource("/imagenes/spoon.png"));
-			lblCu2.setIcon(img);
 		}
 		return lblCu2;
 	}
+
 	private JLabel getLblCu3() {
 		if (lblCu3 == null) {
 			lblCu3 = new JLabel("");
-			ImageIcon img = new ImageIcon(this.getClass().getResource("/imagenes/spoon.png"));
-			lblCu3.setIcon(img);
 		}
 		return lblCu3;
-	}	private JPanel getPanelFotoKk() {
+	}
+
+	private JPanel getPanelFotoKk() {
 		if (panelFotoKk == null) {
 			panelFotoKk = new JPanel();
 			panelFotoKk.setBackground(Color.BLACK);
@@ -389,6 +413,7 @@ public class PantallaPrincipal extends JFrame implements Observer {
 		}
 		return panelFotoKk;
 	}
+
 	private JLabel getLblFotoKk() {
 		if (lblFotoKk == null) {
 			lblFotoKk = new JLabel("");
@@ -402,37 +427,38 @@ public class PantallaPrincipal extends JFrame implements Observer {
 					// TODO Auto-generated method stub
 
 					getLblFotoPapel().setVisible(true);
-					partida.limpiar();
+					Partida.gePartida().limpiar();
 				}
 
 				@Override
 				public void mouseEntered(MouseEvent arg0) {
 					// TODO Auto-generated method stub
-					
+
 				}
 
 				@Override
 				public void mouseExited(MouseEvent arg0) {
 					// TODO Auto-generated method stub
-					
+
 				}
 
 				@Override
 				public void mousePressed(MouseEvent arg0) {
 					// TODO Auto-generated method stub
-					
+
 				}
 
 				@Override
 				public void mouseReleased(MouseEvent arg0) {
 					// TODO Auto-generated method stub
-					
+
 				}
-				
+
 			});
 		}
 		return lblFotoKk;
 	}
+
 	private JPanel getPanelFotoTamagotchi() {
 		if (panelFotoTamagotchi == null) {
 			panelFotoTamagotchi = new JPanel();
@@ -441,6 +467,7 @@ public class PantallaPrincipal extends JFrame implements Observer {
 		}
 		return panelFotoTamagotchi;
 	}
+
 	private JPanel getPanelFotoVirus() {
 		if (panelFotoVirus == null) {
 			panelFotoVirus = new JPanel();
@@ -450,6 +477,7 @@ public class PantallaPrincipal extends JFrame implements Observer {
 		}
 		return panelFotoVirus;
 	}
+
 	private JLabel getLblFotoVirus() {
 		if (lblFotoVirus == null) {
 			lblFotoVirus = new JLabel("");
@@ -462,36 +490,37 @@ public class PantallaPrincipal extends JFrame implements Observer {
 				public void mouseClicked(MouseEvent arg0) {
 					// TODO Auto-generated method stub
 					getLblFotoJeringuilla().setVisible(true);
-					partida.curar();
+					Partida.gePartida().curar();
 				}
 
 				@Override
 				public void mouseEntered(MouseEvent arg0) {
 					// TODO Auto-generated method stub
-					
+
 				}
 
 				@Override
 				public void mouseExited(MouseEvent arg0) {
 					// TODO Auto-generated method stub
-					
+
 				}
 
 				@Override
 				public void mousePressed(MouseEvent arg0) {
 					// TODO Auto-generated method stub
-					
+
 				}
 
 				@Override
 				public void mouseReleased(MouseEvent arg0) {
 					// TODO Auto-generated method stub
-					
+
 				}
 			});
 		}
 		return lblFotoVirus;
 	}
+
 	private JLabel getLblFotoJeringuilla() {
 		if (lblFotoJeringuilla == null) {
 			lblFotoJeringuilla = new JLabel("");
@@ -501,6 +530,7 @@ public class PantallaPrincipal extends JFrame implements Observer {
 		}
 		return lblFotoJeringuilla;
 	}
+
 	private JLabel getLblFotoPapel() {
 		if (lblFotoPapel == null) {
 			lblFotoPapel = new JLabel("");
@@ -523,9 +553,9 @@ public class PantallaPrincipal extends JFrame implements Observer {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
-			if(arg0.getSource().equals(btnExit)){
+			if (arg0.getSource().equals(btnExit)) {
 				PantallaInicio.getPantallaInicio().setVisible(true);
-				partida.terminarPartida(true);
+				Partida.gePartida().terminarPartida(true);
 				setVisible(false);
 			}
 		}
@@ -535,43 +565,164 @@ public class PantallaPrincipal extends JFrame implements Observer {
 	public void update(Observable arg0, Object arg1) {
 		ImageIcon imgCorazonGris = new ImageIcon(this.getClass().getResource("/imagenes/CorazonGris.png"));
 		ImageIcon imgCuencoGris = new ImageIcon(this.getClass().getResource("/imagenes/CuencoGris.png"));
-		ImageIcon imgVirus = new ImageIcon(this.getClass().getResource("/imagenes/Virus.png"));
+		ImageIcon imgCorazonRojo = new ImageIcon(this.getClass().getResource("/imagenes/heart.png"));
+		ImageIcon imgCuencoColor = new ImageIcon(this.getClass().getResource("/imagenes/hungry.png"));
 		// TODO Auto-generated method stub
-		if(arg0 instanceof Partida){
-			Object[] array = (Object[]) arg1;
-			this.getLblPuntos().setText((int) array[0] +"");
-			if((int) array[1] <= 30){
-				getLblCorazon1().setIcon(imgCorazonGris);
-			}
-			if((int) array[2] <= 30) {
-				getLblComida1().setIcon(imgCuencoGris);
-			}
-			if((int) array[2] <= 20) {
-				getLblComida2().setIcon(imgCuencoGris);
-			}
-			if((int) array[2] <= 10) {
-				getLblComida3().setIcon(imgCuencoGris);
-			}
-			if((int) array[2] <= 0) {
-				getLblComida4().setIcon(imgCuencoGris);
-			}
-			ImageIcon imgTamagotchi = new ImageIcon(this.getClass().getResource("/imagenes/"+array[3]+"1.png"));
-			getLblEvolucion().setText((String) array[3]);
-			getLblFoto().setIcon(imgTamagotchi);
+		if (arg0 instanceof Partida) {
+			if (arg1 instanceof Object[]) {
+				Object[] array1 = (Object[]) arg1;
+				this.getLblPuntos().setText((int) array1[0] + "");
+				if ((int) array1[1] <= 30) {
+					getLblCorazon1().setIcon(imgCorazonGris);
+				}else{
+					getLblCorazon1().setIcon(imgCorazonRojo);
+					getLblCorazon2().setIcon(imgCorazonRojo);
+					getLblCorazon3().setIcon(imgCorazonRojo);
+					getLblCorazon4().setIcon(imgCorazonRojo);
+				}
+				if ((int) array1[1] <= 20) {
+					getLblCorazon2().setIcon(imgCorazonGris);
+				}else{
+					getLblCorazon2().setIcon(imgCorazonRojo);
+					getLblCorazon3().setIcon(imgCorazonRojo);
+					getLblCorazon4().setIcon(imgCorazonRojo);
+				}
+				if ((int) array1[1] <= 10) {
+					getLblCorazon3().setIcon(imgCorazonGris);
+				}else{
+					getLblCorazon3().setIcon(imgCorazonRojo);
+					getLblCorazon4().setIcon(imgCorazonRojo);
+				}
+				if ((int) array1[1] <= 0) {
+					getLblCorazon4().setIcon(imgCorazonGris);
+				}else{
+					getLblCorazon4().setIcon(imgCorazonRojo);
+				}
 
-			if((boolean) array[4]){
-				getLblFotoKk().setVisible(true);
-			}else{
-				getLblFotoKk().setVisible(false);
-				getLblFotoPapel().setVisible(false);
+				if ((int) array1[2] <= 30) {
+					getLblComida1().setIcon(imgCuencoGris);
+				}else{
+					getLblComida1().setIcon(imgCuencoColor);
+					getLblComida2().setIcon(imgCuencoColor);
+					getLblComida3().setIcon(imgCuencoColor);
+					getLblComida4().setIcon(imgCuencoColor);
+				}
+				if ((int) array1[2] <= 20) {
+					getLblComida2().setIcon(imgCuencoGris);
+				}else{
+					getLblComida2().setIcon(imgCuencoColor);
+					getLblComida3().setIcon(imgCuencoColor);
+					getLblComida4().setIcon(imgCuencoColor);
+				}
+				if ((int) array1[2] <= 10) {
+					getLblComida3().setIcon(imgCuencoGris);
+				}else{
+					getLblComida3().setIcon(imgCuencoColor);
+					getLblComida4().setIcon(imgCuencoColor);
+				}
+				if ((int) array1[2] <= 0) {
+					getLblComida4().setIcon(imgCuencoGris);
+				}else{
+					getLblComida4().setIcon(imgCuencoColor);
+				}
+				if ((int) array1[1] >= 30 && (int) array1[2] >= 30) {
+					ImageIcon imgTamagotchi = new ImageIcon(
+							this.getClass().getResource("/imagenes/" + array1[3] + "1.png"));
+					getLblFoto().setIcon(imgTamagotchi);
+				} else if ((int) array1[1] >= 20 && (int) array1[2] >= 20) {
+					ImageIcon imgTamagotchi = new ImageIcon(
+							this.getClass().getResource("/imagenes/" + array1[3] + "2.png"));
+					getLblFoto().setIcon(imgTamagotchi);
+				} else if ((int) array1[1] >= 10 && (int) array1[2] >= 10) {
+					ImageIcon imgTamagotchi = new ImageIcon(
+							this.getClass().getResource("/imagenes/" + array1[3] + "3.png"));
+					getLblFoto().setIcon(imgTamagotchi);
+				} else {
+					ImageIcon imgTamagotchi = new ImageIcon(
+							this.getClass().getResource("/imagenes/" + array1[3] + "4.png"));
+					getLblFoto().setIcon(imgTamagotchi);
+				}
+
+				getLblEvolucion().setText((String) array1[3]);
+			}
+			if (arg1 instanceof boolean[]) {
+				boolean[] array2 = (boolean[]) arg1;
+				if ((boolean) array2[0]) {
+					getLblFotoKk().setVisible(true);
+				} else {
+					getLblFotoKk().setVisible(false);
+					getLblFotoPapel().setVisible(false);
+				}
+
+				if ((boolean) array2[1]) {
+					getLblFotoVirus().setVisible(true);
+				} else {
+					getLblFotoVirus().setVisible(false);
+					getLblFotoJeringuilla().setVisible(false);
+				}
 			}
 
-			if((boolean) array[5]){
-				getLblFotoVirus().setVisible(true);
-			}else{
-				getLblFotoVirus().setVisible(false);
-				getLblFotoJeringuilla().setVisible(false);
+			if(arg1 instanceof int[]){
+				int[] array3 = (int[]) arg1;
+				ImageIcon imgPir = new ImageIcon(this.getClass().getResource("/imagenes/candy.png"));
+				ImageIcon imgCu = new ImageIcon(this.getClass().getResource("/imagenes/spoon.png"));
+				if (array3[0] == 0) {
+					getLblPir1().setIcon(null);
+					getLblPir2().setIcon(null);
+					getLblPir3().setIcon(null);
+				}else if (array3[0] == 1) {
+					getLblPir1().setIcon(imgPir);
+					getLblPir2().setIcon(null);
+					getLblPir3().setIcon(null);
+				}else if (array3[0] == 2) {
+					getLblPir1().setIcon(imgPir);
+					getLblPir2().setIcon(imgPir);
+					getLblPir3().setIcon(null);
+				}else if(array3[0] == 3){
+					getLblPir1().setIcon(imgPir);
+					getLblPir2().setIcon(imgPir);
+					getLblPir3().setIcon(imgPir);
+				}
+
+				if (array3[1] == 0) {
+					getLblCu1().setIcon(null);
+					getLblCu2().setIcon(null);
+					getLblCu3().setIcon(null);
+				}else if (array3[1] == 1) {
+					getLblCu1().setIcon(imgCu);
+					getLblCu2().setIcon(null);
+					getLblCu2().setIcon(null);
+				}else if (array3[1] == 2) {
+					getLblCu1().setIcon(imgCu);
+					getLblCu2().setIcon(imgCu);
+					getLblCu3().setIcon(null);
+				}else{
+					getLblCu1().setIcon(imgCu);
+					getLblCu2().setIcon(imgCu);
+					getLblCu3().setIcon(imgCu);
+				}
 			}
 		}
+	}
+
+	private ControladorBotones getControlador() {
+		if (controlador == null) {
+			controlador = new ControladorBotones();
+		}
+		return controlador;
+	}
+
+	private class ControladorBotones implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Auto-generated method stub
+			if (arg0.getSource().equals(btnCandy)) {
+				Partida.gePartida().addPiruleta();
+			} else if(arg0.getSource().equals(btnSoup)){
+				Partida.gePartida().addSopa();
+			}
+		}
+
 	}
 }
