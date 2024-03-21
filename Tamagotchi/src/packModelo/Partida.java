@@ -126,24 +126,22 @@ public class Partida extends Observable {
     }
 
     public void alimentar() {
-        int i = 0;
-        int j = 0;
-        while(i <= this.piruletas){
+        while(this.piruletas > 0){
             this.tamagotchi.comerPiruleta();
             if (this.tamagotchi.getVida() > 40) {
                 this.tamagotchi.setVida(40);
                 score -= 5;
             }
-            i++;
+            this.piruletas--;
         }
         
-        while(j <= this.sopas){
+        while(this.sopas > 0){
             this.tamagotchi.comerSopa();
             if (this.tamagotchi.getHambre() > 40) {
                 this.tamagotchi.setHambre(40);
                 score -= 5;
             }
-            j++;
+            this.sopas--;
         }
         score += elementos*3*elementos;
         this.vaciarElementos();
