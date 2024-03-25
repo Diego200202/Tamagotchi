@@ -45,7 +45,7 @@ public class Partida extends Observable {
                 // Notificar cambios de puntuación y hambre a los observadores
                 setChanged();
                 notifyObservers(new Object[] { score, tamagotchi.getVida(), tamagotchi.getHambre(),
-                        tamagotchi.getEvolucion()});
+                        tamagotchi.getEvolucion() });
             }
         };
 
@@ -56,9 +56,10 @@ public class Partida extends Observable {
 
                 boolean cagado = tamagotchi.estaCagado();
                 boolean enfermo = tamagotchi.estaEnfermo();
+                boolean quiereJugar = tamagotchi.quiereJugar();
                 // Notificar cambios de estado a los observadores
                 setChanged();
-                notifyObservers(new boolean[] { cagado, enfermo });
+                notifyObservers(new boolean[] { cagado, enfermo, quiereJugar });
             }
         };
 
@@ -67,8 +68,9 @@ public class Partida extends Observable {
             @Override
             public void run() {
                 // TODO Auto-generated method stub
-                //terminarPartida(tamagotchi.estaMuerto());
-                setChanged();notifyObservers(new int[]{getPiruletas(), getSopas()});
+                terminarPartida(tamagotchi.estaMuerto());
+                setChanged();
+                notifyObservers(new int[] { getPiruletas(), getSopas() });
             }
 
         };
@@ -126,7 +128,7 @@ public class Partida extends Observable {
     }
 
     public void alimentar() {
-        while(this.piruletas > 0){
+        while (this.piruletas > 0) {
             this.tamagotchi.comerPiruleta();
             if (this.tamagotchi.getVida() > 40) {
                 this.tamagotchi.setVida(40);
@@ -134,8 +136,8 @@ public class Partida extends Observable {
             }
             this.piruletas--;
         }
-        
-        while(this.sopas > 0){
+
+        while (this.sopas > 0) {
             this.tamagotchi.comerSopa();
             if (this.tamagotchi.getHambre() > 40) {
                 this.tamagotchi.setHambre(40);
@@ -143,43 +145,43 @@ public class Partida extends Observable {
             }
             this.sopas--;
         }
-        score += elementos*3*elementos;
+        score += elementos * 3 * elementos;
         this.vaciarElementos();
     }
 
     public void addPiruleta() {
         if (this.piruletas < 3 && sePuedeAñadirElem()) {
             this.piruletas += 1;
-            this.elementos +=1;
+            this.elementos += 1;
         }
     }
 
-    public void addSopa(){
+    public void addSopa() {
         if (this.sopas < 3 && sePuedeAñadirElem()) {
-            this.sopas +=1;
-            elementos +=1;
+            this.sopas += 1;
+            elementos += 1;
         }
     }
 
-    public boolean sePuedeAñadirElem(){
-        if(this.elementos <= 6){
+    public boolean sePuedeAñadirElem() {
+        if (this.elementos <= 6) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
 
-    public void vaciarElementos(){
+    public void vaciarElementos() {
         this.piruletas = 0;
         this.sopas = 0;
         this.elementos = 0;
     }
 
-    public int getPiruletas(){
+    public int getPiruletas() {
         return this.piruletas;
     }
 
-    public int getSopas(){
+    public int getSopas() {
         return this.sopas;
     }
 }

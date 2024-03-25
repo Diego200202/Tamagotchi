@@ -1,7 +1,5 @@
 package packModelo;
 
-import java.util.Observable;
-import java.util.Observer;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -23,6 +21,7 @@ public class Tamagotchi {
     private Timer timerEvolucionar;
     private boolean puedeCagar = true;
     private boolean puedeEnfermar = true;
+    private boolean quiereJugar = false;
 
     public Tamagotchi() {
         this.vida = 40;
@@ -145,11 +144,19 @@ public class Tamagotchi {
         this.hambre += 10;
     }
 
-    public void setVida(int pVida){
+    public void setVida(int pVida) {
         this.vida = pVida;
     }
 
-    public void setHambre(int pHambre){
+    public void setHambre(int pHambre) {
         this.hambre = pHambre;
+    }
+
+    public void jugar() {
+        this.quiereJugar = true;
+    }
+
+    public boolean quiereJugar() {
+        return this.quiereJugar;
     }
 }
