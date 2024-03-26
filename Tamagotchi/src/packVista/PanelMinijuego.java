@@ -1,6 +1,8 @@
 package packVista;
 
 import java.awt.Color;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Observable;
@@ -17,7 +19,7 @@ public class PanelMinijuego extends JLabel implements Observer {
 
     private static final long serialVersionUID = 1L;
     private int pos;
-    private ControladorPaneles controlador = null;
+    private ControladorDureza controladorDureza = null;
 
     /**
      * Create the panel.
@@ -26,7 +28,7 @@ public class PanelMinijuego extends JLabel implements Observer {
         this.pos = pPos;
 
         this.setBackground(Color.BLACK);
-        this.addMouseListener(getControlador());
+        this.addMouseListener(getControladorDureza());
     }
 
     private int getPos() {
@@ -50,6 +52,8 @@ public class PanelMinijuego extends JLabel implements Observer {
                     if ((boolean) array[1]) {
                         this.setIcon(new ImageIcon(this.getClass().getResource(
                                 "/imagenes/MarutchiMini1.png")));
+                    }else{
+                        this.setIcon(null);
                     }
 
                     if ((boolean) array[2]) {
@@ -60,14 +64,14 @@ public class PanelMinijuego extends JLabel implements Observer {
         }
     }
 
-    private ControladorPaneles getControlador(){
-        if(controlador == null){
-            controlador = new ControladorPaneles();
+    private ControladorDureza getControladorDureza(){
+        if(controladorDureza == null){
+            controladorDureza = new ControladorDureza();
         }
-        return controlador;
+        return controladorDureza;
     }
 
-    private class ControladorPaneles implements MouseListener {
+    private class ControladorDureza implements MouseListener {
 
         @Override
         public void mouseClicked(MouseEvent arg0) {
@@ -99,6 +103,5 @@ public class PanelMinijuego extends JLabel implements Observer {
             // TODO Auto-generated method stub
 
         }
-
     }
 }

@@ -1,7 +1,5 @@
 package packVista;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -13,6 +11,8 @@ import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -34,6 +34,7 @@ public class PantallaTamaDigOut extends JFrame {
 	private JPanel panelMedio;
 	private JLabel lblTextoAbajo;
 	private ArrayList<BloqueMinijuego> listaBloques = new ArrayList<>();
+	private ControladorMovimiento controladorMovimiento = null;
 
 	/**
 	 * Create the frame.
@@ -52,10 +53,13 @@ public class PantallaTamaDigOut extends JFrame {
 		contentPane.add(getPanelMedio(), BorderLayout.CENTER);
 		contentPane.add(getLblTextoAbajo(), BorderLayout.SOUTH);
 
+		addKeyListener(getControladorMovimiento());
+		setFocusable(true);
+
 		iniciarTablero();
 	}
 
-	public static PantallaTamaDigOut geTamaDigOut(){
+	public static PantallaTamaDigOut geTamaDigOut() {
 		if (pantalla == null) {
 			pantalla = new PantallaTamaDigOut();
 		}
@@ -150,23 +154,104 @@ public class PantallaTamaDigOut extends JFrame {
 		} while (posPastel == posTamagotchi);
 
 		for (int i = 0; i < 96; i++) {
-			int dureza = random.nextInt(3)+1;
-			BloqueMinijuego bloque = new BloqueMinijuego(dureza);
+			int dureza = random.nextInt(3) + 1;
+			BloqueMinijuego bloque = new BloqueMinijuego(i, dureza);
 			PanelMinijuego label = new PanelMinijuego(i);
 			label.setOpaque(true);
 			if (i == posTamagotchi) {
-				bloque.setTamagotchi();
+				bloque.setTamagotchi(true);
 			} else if (i == posPastel) {
 				bloque.setPastel();
 			}
-			bloque.addObserver((Observer) label); 
+			bloque.addObserver((Observer) label);
 			bloque.setDatos();
 			this.listaBloques.add(bloque);
 			getPanelMedio().add(label);
 		}
 	}
 
-	public ArrayList<BloqueMinijuego> getListaBloques(){
+	public ArrayList<BloqueMinijuego> getListaBloques() {
 		return this.listaBloques;
+	}
+
+	private int getPosBloqueTamagotchi() {
+		int pos = -1;
+		for (BloqueMinijuego b : getListaBloques()) {
+			if (b.getTamagotchi()) {
+				pos = b.getPos();
+			}
+		}
+		return pos;
+	}
+
+	private ControladorMovimiento getControladorMovimiento() {
+		if (controladorMovimiento == null) {
+			controladorMovimiento = new ControladorMovimiento();
+		}
+		return controladorMovimiento;
+	}
+
+	private class ControladorMovimiento implements KeyListener {
+
+		@Override
+		public void keyPressed(KeyEvent arg0) {
+			// TODO Auto-generated method stub
+			if (Character.toString(arg0.getKeyChar()).equalsIgnoreCase("a")) {
+				int num = getPosBloqueTamagotchi();
+				if (num % 12 != 0 && getListaBloques().get(num - 1).getDureza() == 0) {
+					getListaBloques().get(num - 1).setTamagotchi(true);
+					getListaBloques().get(num).setTamagotchi(false);
+
+					getListaBloques().get(num - 1).setDatos();
+					getListaBloques().get(num).setDatos();
+				}
+			}
+
+			else if (Character.toString(arg0.getKeyChar()).equalsIgnoreCase("w")) {
+				int num = getPosBloqueTamagotchi();
+				if (num > 12 && getListaBloques().get(num - 12).getDureza() == 0) {
+					getListaBloques().get(num - 12).setTamagotchi(true);
+					getListaBloques().get(num).setTamagotchi(false);
+
+					getListaBloques().get(num - 12).setDatos();
+					getListaBloques().get(num).setDatos();
+				}
+			}
+
+			else if (Character.toString(arg0.getKeyChar()).equalsIgnoreCase("d")) {
+				int num = getPosBloqueTamagotchi();
+				if (num % 12 != 11 && getListaBloques().get(num + 1).getDureza() == 0) {
+					getListaBloques().get(num + 1).setTamagotchi(true);
+					getListaBloques().get(num).setTamagotchi(false);
+
+					getListaBloques().get(num + 1).setDatos();
+					getListaBloques().get(num).setDatos();
+				}
+			}
+
+			else if (Character.toString(arg0.getKeyChar()).equalsIgnoreCase("s")) {
+				int num = getPosBloqueTamagotchi();
+				if (num + 12 < 96 && getListaBloques().get(num + 12).getDureza() == 0) {
+					getListaBloques().get(num + 12).setTamagotchi(true);
+					getListaBloques().get(num).setTamagotchi(false);
+
+					getListaBloques().get(num + 12).setDatos();
+					getListaBloques().get(num).setDatos();
+				}
+			}
+
+		}
+
+		@Override
+		public void keyReleased(KeyEvent arg0) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void keyTyped(KeyEvent arg0) {
+			// TODO Auto-generated method stub
+
+		}
 	}
 }

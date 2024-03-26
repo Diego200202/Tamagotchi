@@ -3,25 +3,29 @@ package packModelo;
 import java.util.Observable;
 
 public class BloqueMinijuego extends Observable{
-    private int dureza;
+    private int dureza, pos;
     private boolean tieneTamagotchi = false;
     private boolean tienePastel = false;
 
-    public BloqueMinijuego(int pDureza){
+    public BloqueMinijuego(int pPos, int pDureza){
         this.dureza = pDureza; 
-
+        this.pos = pPos;
     }
 
     public int getDureza(){
         return this.dureza;
     }
 
+    public int getPos(){
+        return this.pos;
+    }
+
     public boolean getTamagotchi(){
         return this.tieneTamagotchi;
     }
 
-    public void setTamagotchi(){
-        this.tieneTamagotchi = true;
+    public void setTamagotchi(Boolean pBoolean){
+        this.tieneTamagotchi = pBoolean;
     }
 
     public boolean getPastel(){
