@@ -7,12 +7,14 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import packModelo.BloqueMinijuego;
-import packModelo.CrearBloques;
+import packModelo.Partida;
 
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Random;
 
 import javax.swing.JButton;
@@ -33,25 +35,10 @@ public class PantallaTamaDigOut extends JFrame {
 	private BloqueMinijuego[][] tablero = new BloqueMinijuego[8][12];
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					PantallaTamaDigOut frame = new PantallaTamaDigOut();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the frame.
 	 */
 	public PantallaTamaDigOut() {
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -63,8 +50,8 @@ public class PantallaTamaDigOut extends JFrame {
 		contentPane.add(getPanelArriba(), BorderLayout.NORTH);
 		contentPane.add(getPanelMedio(), BorderLayout.CENTER);
 		contentPane.add(getLblTextoAbajo(), BorderLayout.SOUTH);
-		
-		llenarTablero();
+
+		iniciarTablero();
 	}
 
 	private JPanel getPanelArriba() {
@@ -78,14 +65,17 @@ public class PantallaTamaDigOut extends JFrame {
 		}
 		return panelArriba;
 	}
+
 	private JLabel getLblEvolucion() {
 		if (lblEvolucion == null) {
 			lblEvolucion = new JLabel("");
 			lblEvolucion.setHorizontalAlignment(SwingConstants.CENTER);
 			lblEvolucion.setForeground(Color.WHITE);
+			lblEvolucion.setText(Partida.gePartida().getTamagotchi().getEvolucion());
 		}
 		return lblEvolucion;
 	}
+
 	private JPanel getPanel() {
 		if (panel == null) {
 			panel = new JPanel();
@@ -96,6 +86,7 @@ public class PantallaTamaDigOut extends JFrame {
 		}
 		return panel;
 	}
+
 	private JButton getBtnExit() {
 		if (btnExit == null) {
 			btnExit = new JButton("exit");
@@ -105,6 +96,7 @@ public class PantallaTamaDigOut extends JFrame {
 		}
 		return btnExit;
 	}
+
 	private JLabel getLblScore() {
 		if (lblScore == null) {
 			lblScore = new JLabel("Score: ");
@@ -113,13 +105,16 @@ public class PantallaTamaDigOut extends JFrame {
 		}
 		return lblScore;
 	}
+
 	private JLabel getLblPuntos() {
 		if (lblPuntos == null) {
 			lblPuntos = new JLabel("");
 			lblPuntos.setForeground(Color.CYAN);
+			lblPuntos.setText(Partida.gePartida().getScore() + "");
 		}
 		return lblPuntos;
 	}
+
 	private JPanel getPanelMedio() {
 		if (panelMedio == null) {
 			panelMedio = new JPanel();
@@ -128,6 +123,7 @@ public class PantallaTamaDigOut extends JFrame {
 		}
 		return panelMedio;
 	}
+
 	private JLabel getLblTextoAbajo() {
 		if (lblTextoAbajo == null) {
 			lblTextoAbajo = new JLabel("ooh.. Still Far Away!");
@@ -136,19 +132,28 @@ public class PantallaTamaDigOut extends JFrame {
 		}
 		return lblTextoAbajo;
 	}
-	
-	public BloqueMinijuego crearLabeles(int pDureza) {
-		return new BloqueMinijuego("", pDureza);
-	}
-	
-	public void llenarTablero() {
+
+	private void iniciarTablero() {
 		Random random = new Random();
-		for(int i = 0; i < 8; i++) {
-			for(int j = 0; j < 12; j++) {
-				int dur = random.nextInt(3)+1;
-				tablero[i][j] = CrearBloques.getFactory().crearLabel(dur);
-				getPanelMedio().add(tablero[i][j]);
+		int posTamagotchi = random.nextInt(96);
+		int posPastel = random.nextInt(96);
+		do {
+			posPastel = random.nextInt(96);
+		} while (posPastel == posTamagotchi);
+
+		for (int i = 0; i < 96; i++) {
+			int dureza = random.nextInt(3)+1;
+			BloqueMinijuego bloque = new BloqueMinijuego(dureza);
+			PanelMinijuego label = new PanelMinijuego();
+			label.setOpaque(true);
+			if (i == posTamagotchi) {
+				bloque.setTamagotchi();
+			} else if (i == posPastel) {
+				bloque.setPastel();
 			}
+			bloque.addObserver((Observer) label); 
+			bloque.setDatos();
+			getPanelMedio().add(label);
 		}
 	}
 }

@@ -660,6 +660,13 @@ public class PantallaPrincipal extends JFrame implements Observer {
 					getLblFotoVirus().setVisible(false);
 					getLblFotoJeringuilla().setVisible(false);
 				}
+
+				if ((boolean) array2[2]) {
+					PantallaTamaDigOut pT = new PantallaTamaDigOut();
+					setVisible(false);
+					pT.setVisible(true);
+					Partida.gePartida().getTimer();
+				}
 			}
 
 			if(arg1 instanceof int[]){

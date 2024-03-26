@@ -53,13 +53,15 @@ public class Partida extends Observable {
             @Override
             public void run() {
                 // Actualizar el estado del Tamagotchi cada 2 segundos
-
+                tamagotchi.jugar();
                 boolean cagado = tamagotchi.estaCagado();
                 boolean enfermo = tamagotchi.estaEnfermo();
                 boolean quiereJugar = tamagotchi.quiereJugar();
                 // Notificar cambios de estado a los observadores
                 setChanged();
-                notifyObservers(new boolean[] { cagado, enfermo, quiereJugar });
+                notifyObservers(new boolean[] { cagado, enfermo, quiereJugar, });
+
+                tamagotchi.setQuiereJugar();
             }
         };
 
@@ -68,7 +70,7 @@ public class Partida extends Observable {
             @Override
             public void run() {
                 // TODO Auto-generated method stub
-                terminarPartida(tamagotchi.estaMuerto());
+                //terminarPartida(tamagotchi.estaMuerto());
                 setChanged();
                 notifyObservers(new int[] { getPiruletas(), getSopas() });
             }
@@ -183,5 +185,17 @@ public class Partida extends Observable {
 
     public int getSopas() {
         return this.sopas;
+    }
+
+    public Tamagotchi getTamagotchi(){
+        return this.tamagotchi;
+    }
+
+    public int getScore(){
+        return this.score;
+    }
+
+    public Timer getTimer(){
+        return this.timer;
     }
 }

@@ -22,6 +22,7 @@ public class Tamagotchi {
     private boolean puedeCagar = true;
     private boolean puedeEnfermar = true;
     private boolean quiereJugar = false;
+    private boolean puedeJugar = true;
 
     public Tamagotchi() {
         this.vida = 40;
@@ -153,10 +154,24 @@ public class Tamagotchi {
     }
 
     public void jugar() {
-        this.quiereJugar = true;
+        if (!quiereJugar && puedeJugar) {
+            int num = random.nextInt(100);
+            if (num < 12) {
+                this.quiereJugar = true;
+                this.puedeJugar = false;
+            }
+        }
     }
 
     public boolean quiereJugar() {
         return this.quiereJugar;
+    }
+
+    public void puedeJugar(boolean pBoolean){
+        this.puedeJugar = pBoolean;
+    }
+
+    public void setQuiereJugar(){
+        this.quiereJugar = false;
     }
 }
