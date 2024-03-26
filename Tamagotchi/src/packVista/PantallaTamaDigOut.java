@@ -183,6 +183,9 @@ public class PantallaTamaDigOut extends JFrame {
 		}
 		return pos;
 	}
+	public void reset(){
+		pantalla = null;
+	}
 
 	private ControladorMovimiento getControladorMovimiento() {
 		if (controladorMovimiento == null) {

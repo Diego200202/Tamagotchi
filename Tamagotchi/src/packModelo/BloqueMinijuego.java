@@ -40,6 +40,7 @@ public class BloqueMinijuego extends Observable{
     public void quitarDureza(){
         if(this.dureza > 0){
             this.dureza--;
+            Partida.gePartida().setScore(1);
         }
         this.setDatos();
     }

@@ -5,6 +5,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import packVista.PantallaInicio;
+import packVista.PantallaPrincipal;
 
 public class Partida extends Observable {
     public static Partida partida = null;
@@ -22,65 +23,7 @@ public class Partida extends Observable {
         this.piruletas = 0;
         this.sopas = 0;
 
-        TimerTask timerTask = new TimerTask() {
-            @Override
-            public void run() {
-                // Actualizar la puntuación y bajar la vida de la comida cada 4 segundos
-                score += 1;
-                String evo = tamagotchi.getEvolucion();
-                if (evo.equalsIgnoreCase("Marutchi") && !evolucionadoMarutchi) {
-                    score += 20;
-                    evolucionadoMarutchi = true;
-                }
-                if (tamagotchi.estaCagado()) {
-                    score -= 5;
-                }
-                if (tamagotchi.estaEnfermo()) {
-                    score -= 5;
-                }
-                tamagotchi.bajarVidaComida();
-                tamagotchi.cagarse();
-                tamagotchi.ponerEnfermo();
-                alimentar();
-                // Notificar cambios de puntuación y hambre a los observadores
-                setChanged();
-                notifyObservers(new Object[] { score, tamagotchi.getVida(), tamagotchi.getHambre(),
-                        tamagotchi.getEvolucion() });
-            }
-        };
-
-        TimerTask timerTaskEstado = new TimerTask() {
-            @Override
-            public void run() {
-                // Actualizar el estado del Tamagotchi cada 2 segundos
-                tamagotchi.jugar();
-                boolean cagado = tamagotchi.estaCagado();
-                boolean enfermo = tamagotchi.estaEnfermo();
-                boolean quiereJugar = tamagotchi.quiereJugar();
-                // Notificar cambios de estado a los observadores
-                setChanged();
-                notifyObservers(new boolean[] { cagado, enfermo, quiereJugar, });
-
-                tamagotchi.setQuiereJugar();
-            }
-        };
-
-        TimerTask timerTernimarPartida = new TimerTask() {
-
-            @Override
-            public void run() {
-                // TODO Auto-generated method stub
-                //terminarPartida(tamagotchi.estaMuerto());
-                setChanged();
-                notifyObservers(new int[] { getPiruletas(), getSopas() });
-            }
-
-        };
-
-        timer = new Timer();
-        timer.scheduleAtFixedRate(timerTask, 4000, 4000); // Actualizar cada 4 segundos
-        timer.scheduleAtFixedRate(timerTaskEstado, 1000, 2000); // Actualizar cada 2 segundos
-        timer.scheduleAtFixedRate(timerTernimarPartida, 1000, 1000); // Actualizar cada 1 segundo
+        iniciarTimer();
     }
 
     public static Partida gePartida() {
@@ -96,6 +39,9 @@ public class Partida extends Observable {
             this.timer.cancel();
             jugador.setScore(score);
             ListaJugadores.getListaJugadores().addJugador(this.jugador);
+            PantallaInicio.getPantallaInicio().getTextFieldNombre().setText("");
+			PantallaPrincipal.getPantalla().reset();
+            partida = null;
         }
     }
 
@@ -197,5 +143,77 @@ public class Partida extends Observable {
 
     public Timer getTimer(){
         return this.timer;
+    }
+
+    public void setScore(int pSum){
+        this.score += pSum;
+    }
+
+    public void iniciarTimer(){
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                // Actualizar la puntuación y bajar la vida de la comida cada 4 segundos
+                score += 1;
+                String evo = tamagotchi.getEvolucion();
+                if (evo.equalsIgnoreCase("Marutchi") && !evolucionadoMarutchi) {
+                    score += 20;
+                    evolucionadoMarutchi = true;
+                }
+                if (tamagotchi.estaCagado()) {
+                    score -= 5;
+                }
+                if (tamagotchi.estaEnfermo()) {
+                    score -= 5;
+                }
+                tamagotchi.bajarVidaComida();
+                tamagotchi.cagarse();
+                tamagotchi.ponerEnfermo();
+                alimentar();
+                // Notificar cambios de puntuación y hambre a los observadores
+                setChanged();
+                notifyObservers(new Object[] { score, tamagotchi.getVida(), tamagotchi.getHambre(),
+                        tamagotchi.getEvolucion() });
+            }
+        };
+
+        TimerTask timerTaskEstado = new TimerTask() {
+            @Override
+            public void run() {
+                // Actualizar el estado del Tamagotchi cada 2 segundos
+                tamagotchi.jugar();
+                boolean cagado = tamagotchi.estaCagado();
+                boolean enfermo = tamagotchi.estaEnfermo();
+                boolean quiereJugar = tamagotchi.quiereJugar();
+                // Notificar cambios de estado a los observadores
+                setChanged();
+                notifyObservers(new boolean[] { cagado, enfermo, quiereJugar, });
+
+                tamagotchi.setQuiereJugar();
+            }
+        };
+
+        TimerTask timerTernimarPartida = new TimerTask() {
+
+            @Override
+            public void run() {
+                // TODO Auto-generated method stub
+                terminarPartida(tamagotchi.estaMuerto());
+                setChanged();
+                notifyObservers(new int[] { getPiruletas(), getSopas() });
+            }
+
+        };
+
+        timer = new Timer();
+        timer.scheduleAtFixedRate(timerTask, 4000, 4000); // Actualizar cada 4 segundos
+        timer.scheduleAtFixedRate(timerTaskEstado, 1000, 2000); // Actualizar cada 2 segundos
+        timer.scheduleAtFixedRate(timerTernimarPartida, 1000, 1000); // Actualizar cada 1 segundo
+    }
+
+    public void pararTimer(){
+        timer.cancel();
+        timer.purge();
+        timer = null;
     }
 }

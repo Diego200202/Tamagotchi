@@ -141,7 +141,7 @@ public class PantallaInicio extends JFrame implements Observer {
 		return lblNombre;
 	}
 
-	private JTextField getTextFieldNombre() {
+	public JTextField getTextFieldNombre() {
 		if (textFieldNombre == null) {
 			textFieldNombre = new JTextField();
 			textFieldNombre.setBackground(Color.GRAY);
@@ -552,9 +552,8 @@ public class PantallaInicio extends JFrame implements Observer {
 			}
 		}
 		if (arg0 instanceof Juego) {
-			PantallaPrincipal pP = new PantallaPrincipal();
+			PantallaPrincipal.getPantalla().setVisible(true);
 			this.setVisible(false);
-			pP.setVisible(true);
 		}
 	}
 }

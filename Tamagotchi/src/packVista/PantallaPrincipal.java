@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import packModelo.Juego;
 import packModelo.Partida;
 
 import java.awt.Color;
@@ -25,7 +26,7 @@ import javax.swing.JButton;
 
 public class PantallaPrincipal extends JFrame implements Observer {
 
-	private static final long serialVersionUID = 1L;
+	private static PantallaPrincipal pantalla = null;
 	private JPanel contentPane;
 	private JPanel panelDatos;
 	private JLabel lblEvolucion;
@@ -71,7 +72,7 @@ public class PantallaPrincipal extends JFrame implements Observer {
 	/**
 	 * Create the frame.
 	 */
-	public PantallaPrincipal() {
+	private PantallaPrincipal() {
 		Partida.gePartida().addObserver(this);
 
 		setTitle("Tamagotchi");
@@ -88,6 +89,13 @@ public class PantallaPrincipal extends JFrame implements Observer {
 		contentPane.add(getPanelCorazones(), BorderLayout.WEST);
 		contentPane.add(getPanelComida(), BorderLayout.EAST);
 		contentPane.add(getPanelAbajo(), BorderLayout.SOUTH);
+	}
+
+	public static PantallaPrincipal getPantalla(){
+		if (pantalla == null) {
+			pantalla = new PantallaPrincipal();
+		}
+		return pantalla;
 	}
 
 	private JPanel getPanelDatos() {
@@ -541,6 +549,10 @@ public class PantallaPrincipal extends JFrame implements Observer {
 		return lblFotoPapel;
 	}
 
+	public void reset(){
+		pantalla = null;
+	}
+
 	private ControladorBtnExit getControladorBtnExit() {
 		if (controladorExit == null) {
 			controladorExit = new ControladorBtnExit();
@@ -664,6 +676,7 @@ public class PantallaPrincipal extends JFrame implements Observer {
 				if ((boolean) array2[2]) {
 					setVisible(false);
 					PantallaTamaDigOut.geTamaDigOut().setVisible(true);
+					Juego.getJuego().iniciarMinijuego();
 				}
 			}
 
