@@ -1,6 +1,8 @@
 package packVista;
 
 import java.awt.Color;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -14,12 +16,21 @@ import packModelo.Partida;
 public class PanelMinijuego extends JLabel implements Observer {
 
     private static final long serialVersionUID = 1L;
+    private int pos;
+    private ControladorPaneles controlador = null;
 
     /**
      * Create the panel.
      */
-    public PanelMinijuego() {
+    public PanelMinijuego(int pPos) {
+        this.pos = pPos;
+
         this.setBackground(Color.BLACK);
+        this.addMouseListener(getControlador());
+    }
+
+    private int getPos() {
+        return this.pos;
     }
 
     @Override
@@ -38,14 +49,56 @@ public class PanelMinijuego extends JLabel implements Observer {
                     this.setBackground(Color.BLACK);
                     if ((boolean) array[1]) {
                         this.setIcon(new ImageIcon(this.getClass().getResource(
-                                "/imagenes/" + Partida.gePartida().getTamagotchi().getEvolucion() + "1.png")));
+                                "/imagenes/MarutchiMini1.png")));
                     }
 
                     if ((boolean) array[2]) {
-                        this.setIcon(new ImageIcon(this.getClass().getResource("/imagenes/dorayaki.png")));
+                        this.setIcon(new ImageIcon(this.getClass().getResource("/imagenes/dorayakiSmall.png")));
                     }
                 }
             }
         }
+    }
+
+    private ControladorPaneles getControlador(){
+        if(controlador == null){
+            controlador = new ControladorPaneles();
+        }
+        return controlador;
+    }
+
+    private class ControladorPaneles implements MouseListener {
+
+        @Override
+        public void mouseClicked(MouseEvent arg0) {
+            // TODO Auto-generated method stub
+
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent arg0) {
+            // TODO Auto-generated method stub
+            PantallaTamaDigOut.geTamaDigOut().getListaBloques().get(getPos()).quitarDureza();
+            PantallaTamaDigOut.geTamaDigOut().getListaBloques().get(getPos()).setDatos();
+        }
+
+        @Override
+        public void mouseExited(MouseEvent arg0) {
+            // TODO Auto-generated method stub
+
+        }
+
+        @Override
+        public void mousePressed(MouseEvent arg0) {
+            // TODO Auto-generated method stub
+
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent arg0) {
+            // TODO Auto-generated method stub
+
+        }
+
     }
 }

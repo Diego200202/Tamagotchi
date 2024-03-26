@@ -25,6 +25,6 @@ public class Juego extends Observable{
         Partida.gePartida().setJugador(jugador);
         Partida.gePartida().setTamagotchi(tamagotchi);
         setChanged();
-        notifyObservers(Partida.gePartida());
+        notifyObservers();
     }
 }

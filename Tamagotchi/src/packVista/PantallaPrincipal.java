@@ -662,10 +662,8 @@ public class PantallaPrincipal extends JFrame implements Observer {
 				}
 
 				if ((boolean) array2[2]) {
-					PantallaTamaDigOut pT = new PantallaTamaDigOut();
 					setVisible(false);
-					pT.setVisible(true);
-					Partida.gePartida().getTimer();
+					PantallaTamaDigOut.geTamaDigOut().setVisible(true);
 				}
 			}
 

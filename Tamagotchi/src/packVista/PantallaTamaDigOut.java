@@ -13,6 +13,7 @@ import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Random;
@@ -22,7 +23,7 @@ import javax.swing.SwingConstants;
 
 public class PantallaTamaDigOut extends JFrame {
 
-	private static final long serialVersionUID = 1L;
+	private static PantallaTamaDigOut pantalla = null;
 	private JPanel contentPane;
 	private JPanel panelArriba;
 	private JLabel lblEvolucion;
@@ -32,15 +33,15 @@ public class PantallaTamaDigOut extends JFrame {
 	private JLabel lblPuntos;
 	private JPanel panelMedio;
 	private JLabel lblTextoAbajo;
-	private BloqueMinijuego[][] tablero = new BloqueMinijuego[8][12];
+	private ArrayList<BloqueMinijuego> listaBloques = new ArrayList<>();
 
 	/**
 	 * Create the frame.
 	 */
-	public PantallaTamaDigOut() {
+	private PantallaTamaDigOut() {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 500, 400);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.BLACK);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -52,6 +53,13 @@ public class PantallaTamaDigOut extends JFrame {
 		contentPane.add(getLblTextoAbajo(), BorderLayout.SOUTH);
 
 		iniciarTablero();
+	}
+
+	public static PantallaTamaDigOut geTamaDigOut(){
+		if (pantalla == null) {
+			pantalla = new PantallaTamaDigOut();
+		}
+		return pantalla;
 	}
 
 	private JPanel getPanelArriba() {
@@ -144,7 +152,7 @@ public class PantallaTamaDigOut extends JFrame {
 		for (int i = 0; i < 96; i++) {
 			int dureza = random.nextInt(3)+1;
 			BloqueMinijuego bloque = new BloqueMinijuego(dureza);
-			PanelMinijuego label = new PanelMinijuego();
+			PanelMinijuego label = new PanelMinijuego(i);
 			label.setOpaque(true);
 			if (i == posTamagotchi) {
 				bloque.setTamagotchi();
@@ -153,7 +161,12 @@ public class PantallaTamaDigOut extends JFrame {
 			}
 			bloque.addObserver((Observer) label); 
 			bloque.setDatos();
+			this.listaBloques.add(bloque);
 			getPanelMedio().add(label);
 		}
+	}
+
+	public ArrayList<BloqueMinijuego> getListaBloques(){
+		return this.listaBloques;
 	}
 }

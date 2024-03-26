@@ -2,8 +2,6 @@ package packModelo;
 
 import java.util.Observable;
 
-import javax.swing.JLabel;
-
 public class BloqueMinijuego extends Observable{
     private int dureza;
     private boolean tieneTamagotchi = false;
@@ -32,6 +30,14 @@ public class BloqueMinijuego extends Observable{
 
     public void setPastel(){
         this.tienePastel = true;
+    }
+
+
+    public void quitarDureza(){
+        if(this.dureza > 0){
+            this.dureza--;
+        }
+        this.setDatos();
     }
 
     public void setDatos(){
